@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Clayton Analytics LTD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+</head>
+<body>
+
+<section class="sub-header">
+    <nav>
+        <a href="index.html" class="logo-text">Clayton Analytics</a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li>
+                    <div class="dropdown">
+                        <button class="dropbtn">FROM SCRATCH</button>
+                        <div class="dropdown-content">
+                          <a href="">Linear Regression</a>
+                          <a href="">Generalised Linear Models</a>
+                          <a href="">Gradient Boosting Machines</a>
+                          <a href="">Neural Networks</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="">CONTACT</a></li>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <h1>Linear Regression From Scratch</h1>
+
+
+</section>
+<!----- about us content ----->
+
+
+<!-----Java Script----->
+<script>
+    var NavLinks = document.getElementbyID("navLinks");
+
+    function showMenu(){
+        NavLinks.style.right = "0";
+    }
+    function hideMenu(){
+        NavLinks.style.right = "-200px";
+    }
+
+
+</script>
+
+</body>
+</html>

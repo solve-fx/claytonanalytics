@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Clayton Analytics LTD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+</head>
+<body>
+
+<section class="sub-header">
+    <nav>
+        <a href="index.html" class="logo-text">Clayton Analytics</a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="tools.html">TOOLS</a></li>
+                <li><a href="projects.html">PROJECTS</a></li>
+                <!-----<li>
+                    <div class="dropdown">
+                        <button class="dropbtn">FROM SCRATCH</button>
+                        <div class="dropdown-content">
+                          <a href="">Linear Regression</a>
+                          <a href="">Generalised Linear Models</a>
+                          <a href="">Gradient Boosting Machines</a>
+                          <a href="">Neural Networks</a>
+                        </div>
+                    </div>
+                </li>----->
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <h1>About Us</h1>
+
+
+</section>
+<!----- about us content ----->
+
+
+<section class="about-us">
+        <div class="row2">
+            <div class="about-col">
+                <h1>Using your data effectively</h1>
+                <p>Founded in early 2019, Clayton Analytics is a data science consultancy specialising in using machine learning to extract actionable insight from your data. <br> <br> 
+                   Machine learning can be used to quickly and accurately identify relationships in your data, allowing you to understand which factors are driving business performance, and how to optimise them. <br> <br>
+                   Our services can be offered with a flexibility that suits you, from a few hours to a permanent addition to your team. <br> <br>
+                </p>
+                
+                <a href="contact.html" class="hero-btn red-btn"> Contact Us</a>
+            </div>
+            <div class="about-col">
+                <img src="images/team2.jpg_fit=scale">
+            </div>
+        </div>
+</section>
+
+
+<!-----Call to Action----->
+
+<section class="cta">
+    <h1>We can provide a tailored service<br> get in contact to find out more</h1>
+    <a href="contact.html" class="hero-btn">Contact Us</a>
+</section>
+
+
+<!-----Java Script----->
+<script>
+    var NavLinks = document.getElementbyID("navLinks");
+
+    function showMenu(){
+        NavLinks.style.right = "0";
+    }
+    function hideMenu(){
+        NavLinks.style.right = "-200px";
+    }
+
+
+</script>
+
+</body>
+</html>

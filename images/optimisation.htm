@@ -1,0 +1,1761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="format-detection" content="telephone=no">
+<meta name="format-detection" content="address=no">
+<link rel='icon' id='favicon' type='image/x-icon' href='https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg'>
+<link rel='apple-touch-icon' href='https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg'>
+<link rel='apple-touch-icon' sizes='76x76' href='https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg'>
+<link rel='apple-touch-icon' sizes='114x114' href='https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg'>
+<link rel='apple-touch-icon' sizes='144x144' href='https://www.analyticsvidhya.com/wp-content/uploads/2015/02/logo_square_v2.jpg'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" />
+
+<link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css>
+<link rel=stylesheet type=text/css href=https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css>
+
+<link rel=stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" integrity="sha256-BtbhCIbtfeVWGsqxk1vOHEYXS6qcvQvLMZqjtpWUEx8=" crossorigin=anonymous>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/css/main.min.css?v=1.8.9.9" />
+<link rel="stylesheet" href="https://automation.analyticsvidhya.com/static/css/stripBootstrap.css">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<title>Loss Function | Loss Function In Machine Learning</title>
+
+<script type="83c4525b4d828e7064e82a19-text/javascript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MPSM42V');</script>
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPSM42V"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<style>
+.stb-container-css {margin: 10px 10px 10px 10px;}.stb-box {}.stb-caption-box {}.stb-body-box {}
+/* Class Dependent Parameters */
+.stb-border.stb-alert-container {border: 1px none #FF4F4A;}.stb-side.stb-alert-container {background: #FF4F4A;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FF4F4A', endColorstr='#504848',GradientType=0 );background: -moz-linear-gradient(top,  #FF4F4A 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FF4F4A), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #FF4F4A 30%,#504848 90%);background: -o-linear-gradient(top,  #FF4F4A 30%,#504848 90%);background: -ms-linear-gradient(top,  #FF4F4A 30%,#504848 90%);background: linear-gradient(#FF4F4A 30%, #504848 90%);}.stb-side-none.stb-alert-container {background: #FFE7E6;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFE7E6', endColorstr='#fb7d78',GradientType=0 );background: -moz-linear-gradient(top,  #FFE7E6 30%, #fb7d78 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FFE7E6), color-stop(90%,#fb7d78));background: -webkit-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: -o-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: -ms-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: linear-gradient(#FFE7E6 30%, #fb7d78 90%);}.stb-alert_box {background: #FFE7E6;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFE7E6', endColorstr='#fb7d78',GradientType=0 );background: -moz-linear-gradient(top,  #FFE7E6 30%, #fb7d78 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FFE7E6), color-stop(90%,#fb7d78));background: -webkit-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: -o-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: -ms-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: linear-gradient(#FFE7E6 30%, #fb7d78 90%);color: #000000;}.stb-alert-caption_box {background: #FF4F4A;background: -moz-linear-gradient(top,  #FF4F4A 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FF4F4A), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #FF4F4A 30%,#504848 90%);background: -o-linear-gradient(top,  #FF4F4A 30%,#504848 90%);background: -ms-linear-gradient(top,  #FF4F4A 30%,#504848 90%);background: linear-gradient(#FF4F4A 30%, #504848 90%);color: #FFFFFF;}.stb-alert-body_box {background: #FFE7E6;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFE7E6', endColorstr='#fb7d78',GradientType=0 );background: -moz-linear-gradient(top,  #FFE7E6 30%, #fb7d78 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FFE7E6), color-stop(90%,#fb7d78));background: -webkit-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: -o-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: -ms-linear-gradient(top,  #FFE7E6 30%,#fb7d78 90%);background: linear-gradient(#FFE7E6 30%, #fb7d78 90%);color: #000000;}.stb-border.stb-black-container {border: 1px none #6E6E6E;}.stb-side.stb-black-container {background: #333333;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#504848',GradientType=0 );background: -moz-linear-gradient(top,  #333333 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#333333), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #333333 30%,#504848 90%);background: -o-linear-gradient(top,  #333333 30%,#504848 90%);background: -ms-linear-gradient(top,  #333333 30%,#504848 90%);background: linear-gradient(#333333 30%, #504848 90%);}.stb-side-none.stb-black-container {background: #000000;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 );background: -moz-linear-gradient(top,  #000000 30%, #000000 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#000000), color-stop(90%,#000000));background: -webkit-linear-gradient(top,  #000000 30%,#000000 90%);background: -o-linear-gradient(top,  #000000 30%,#000000 90%);background: -ms-linear-gradient(top,  #000000 30%,#000000 90%);background: linear-gradient(#000000 30%, #000000 90%);}.stb-black_box {background: #000000;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 );background: -moz-linear-gradient(top,  #000000 30%, #000000 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#000000), color-stop(90%,#000000));background: -webkit-linear-gradient(top,  #000000 30%,#000000 90%);background: -o-linear-gradient(top,  #000000 30%,#000000 90%);background: -ms-linear-gradient(top,  #000000 30%,#000000 90%);background: linear-gradient(#000000 30%, #000000 90%);color: #FFFFFF;}.stb-black-caption_box {background: #333333;background: -moz-linear-gradient(top,  #333333 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#333333), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #333333 30%,#504848 90%);background: -o-linear-gradient(top,  #333333 30%,#504848 90%);background: -ms-linear-gradient(top,  #333333 30%,#504848 90%);background: linear-gradient(#333333 30%, #504848 90%);color: #FFFFFF;}.stb-black-body_box {background: #000000;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#000000',GradientType=0 );background: -moz-linear-gradient(top,  #000000 30%, #000000 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#000000), color-stop(90%,#000000));background: -webkit-linear-gradient(top,  #000000 30%,#000000 90%);background: -o-linear-gradient(top,  #000000 30%,#000000 90%);background: -ms-linear-gradient(top,  #000000 30%,#000000 90%);background: linear-gradient(#000000 30%, #000000 90%);color: #FFFFFF;}.stb-border.stb-custom-container {border: 1px none #f844ee;}.stb-side.stb-custom-container {background: #f844ee;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f844ee', endColorstr='#504848',GradientType=0 );background: -moz-linear-gradient(top,  #f844ee 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#f844ee), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #f844ee 30%,#504848 90%);background: -o-linear-gradient(top,  #f844ee 30%,#504848 90%);background: -ms-linear-gradient(top,  #f844ee 30%,#504848 90%);background: linear-gradient(#f844ee 30%, #504848 90%);}.stb-side-none.stb-custom-container {background: #f7cdf5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7cdf5', endColorstr='#f77df1',GradientType=0 );background: -moz-linear-gradient(top,  #f7cdf5 30%, #f77df1 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#f7cdf5), color-stop(90%,#f77df1));background: -webkit-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: -o-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: -ms-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: linear-gradient(#f7cdf5 30%, #f77df1 90%);}.stb-custom_box {background: #f7cdf5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7cdf5', endColorstr='#f77df1',GradientType=0 );background: -moz-linear-gradient(top,  #f7cdf5 30%, #f77df1 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#f7cdf5), color-stop(90%,#f77df1));background: -webkit-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: -o-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: -ms-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: linear-gradient(#f7cdf5 30%, #f77df1 90%);color: #000000;}.stb-custom-caption_box {background: #f844ee;background: -moz-linear-gradient(top,  #f844ee 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#f844ee), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #f844ee 30%,#504848 90%);background: -o-linear-gradient(top,  #f844ee 30%,#504848 90%);background: -ms-linear-gradient(top,  #f844ee 30%,#504848 90%);background: linear-gradient(#f844ee 30%, #504848 90%);color: #ffffff;}.stb-custom-body_box {background: #f7cdf5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7cdf5', endColorstr='#f77df1',GradientType=0 );background: -moz-linear-gradient(top,  #f7cdf5 30%, #f77df1 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#f7cdf5), color-stop(90%,#f77df1));background: -webkit-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: -o-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: -ms-linear-gradient(top,  #f7cdf5 30%,#f77df1 90%);background: linear-gradient(#f7cdf5 30%, #f77df1 90%);color: #000000;}.stb-border.stb-download-container {border: 1px none #65ADFE;}.stb-side.stb-download-container {background: #65ADFE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#65ADFE', endColorstr='#504848',GradientType=0 );background: -moz-linear-gradient(top,  #65ADFE 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#65ADFE), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #65ADFE 30%,#504848 90%);background: -o-linear-gradient(top,  #65ADFE 30%,#504848 90%);background: -ms-linear-gradient(top,  #65ADFE 30%,#504848 90%);background: linear-gradient(#65ADFE 30%, #504848 90%);}.stb-side-none.stb-download-container {background: #DFF0FF;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#DFF0FF', endColorstr='#2e7cb9',GradientType=0 );background: -moz-linear-gradient(top,  #DFF0FF 30%, #2e7cb9 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#DFF0FF), color-stop(90%,#2e7cb9));background: -webkit-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: -o-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: -ms-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: linear-gradient(#DFF0FF 30%, #2e7cb9 90%);}.stb-download_box {background: #DFF0FF;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#DFF0FF', endColorstr='#2e7cb9',GradientType=0 );background: -moz-linear-gradient(top,  #DFF0FF 30%, #2e7cb9 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#DFF0FF), color-stop(90%,#2e7cb9));background: -webkit-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: -o-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: -ms-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: linear-gradient(#DFF0FF 30%, #2e7cb9 90%);color: #000000;}.stb-download-caption_box {background: #65ADFE;background: -moz-linear-gradient(top,  #65ADFE 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#65ADFE), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #65ADFE 30%,#504848 90%);background: -o-linear-gradient(top,  #65ADFE 30%,#504848 90%);background: -ms-linear-gradient(top,  #65ADFE 30%,#504848 90%);background: linear-gradient(#65ADFE 30%, #504848 90%);color: #FFFFFF;}.stb-download-body_box {background: #DFF0FF;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#DFF0FF', endColorstr='#2e7cb9',GradientType=0 );background: -moz-linear-gradient(top,  #DFF0FF 30%, #2e7cb9 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#DFF0FF), color-stop(90%,#2e7cb9));background: -webkit-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: -o-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: -ms-linear-gradient(top,  #DFF0FF 30%,#2e7cb9 90%);background: linear-gradient(#DFF0FF 30%, #2e7cb9 90%);color: #000000;}.stb-border.stb-grey-container {border: 1px none #BBBBBB;}.stb-side.stb-grey-container {background: #BBBBBB;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#BBBBBB', endColorstr='#6e6e6e',GradientType=0 );background: -moz-linear-gradient(top,  #BBBBBB 30%, #6e6e6e 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#BBBBBB), color-stop(90%,#6e6e6e));background: -webkit-linear-gradient(top,  #BBBBBB 30%,#6e6e6e 90%);background: -o-linear-gradient(top,  #BBBBBB 30%,#6e6e6e 90%);background: -ms-linear-gradient(top,  #BBBBBB 30%,#6e6e6e 90%);background: linear-gradient(#BBBBBB 30%, #6e6e6e 90%);}.stb-side-none.stb-grey-container {background: #EEEEEE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#ababab',GradientType=0 );background: -moz-linear-gradient(top,  #EEEEEE 30%, #ababab 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#EEEEEE), color-stop(90%,#ababab));background: -webkit-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: -o-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: -ms-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: linear-gradient(#EEEEEE 30%, #ababab 90%);}.stb-grey_box {background: #EEEEEE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#ababab',GradientType=0 );background: -moz-linear-gradient(top,  #EEEEEE 30%, #ababab 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#EEEEEE), color-stop(90%,#ababab));background: -webkit-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: -o-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: -ms-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: linear-gradient(#EEEEEE 30%, #ababab 90%);color: #000000;}.stb-grey-caption_box {background: #BBBBBB;background: -moz-linear-gradient(top,  #BBBBBB 30%, #6e6e6e 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#BBBBBB), color-stop(90%,#6e6e6e));background: -webkit-linear-gradient(top,  #BBBBBB 30%,#6e6e6e 90%);background: -o-linear-gradient(top,  #BBBBBB 30%,#6e6e6e 90%);background: -ms-linear-gradient(top,  #BBBBBB 30%,#6e6e6e 90%);background: linear-gradient(#BBBBBB 30%, #6e6e6e 90%);color: #FFFFFF;}.stb-grey-body_box {background: #EEEEEE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#EEEEEE', endColorstr='#ababab',GradientType=0 );background: -moz-linear-gradient(top,  #EEEEEE 30%, #ababab 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#EEEEEE), color-stop(90%,#ababab));background: -webkit-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: -o-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: -ms-linear-gradient(top,  #EEEEEE 30%,#ababab 90%);background: linear-gradient(#EEEEEE 30%, #ababab 90%);color: #000000;}.stb-border.stb-info-container {border: 1px none #7AD975;}.stb-side.stb-info-container {background: #7AD975;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7AD975', endColorstr='#504848',GradientType=0 );background: -moz-linear-gradient(top,  #7AD975 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#7AD975), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #7AD975 30%,#504848 90%);background: -o-linear-gradient(top,  #7AD975 30%,#504848 90%);background: -ms-linear-gradient(top,  #7AD975 30%,#504848 90%);background: linear-gradient(#7AD975 30%, #504848 90%);}.stb-side-none.stb-info-container {background: #E2F8DE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E2F8DE', endColorstr='#79b06e',GradientType=0 );background: -moz-linear-gradient(top,  #E2F8DE 30%, #79b06e 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#E2F8DE), color-stop(90%,#79b06e));background: -webkit-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: -o-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: -ms-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: linear-gradient(#E2F8DE 30%, #79b06e 90%);}.stb-info_box {background: #E2F8DE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E2F8DE', endColorstr='#79b06e',GradientType=0 );background: -moz-linear-gradient(top,  #E2F8DE 30%, #79b06e 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#E2F8DE), color-stop(90%,#79b06e));background: -webkit-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: -o-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: -ms-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: linear-gradient(#E2F8DE 30%, #79b06e 90%);color: #000000;}.stb-info-caption_box {background: #7AD975;background: -moz-linear-gradient(top,  #7AD975 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#7AD975), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #7AD975 30%,#504848 90%);background: -o-linear-gradient(top,  #7AD975 30%,#504848 90%);background: -ms-linear-gradient(top,  #7AD975 30%,#504848 90%);background: linear-gradient(#7AD975 30%, #504848 90%);color: #FFFFFF;}.stb-info-body_box {background: #E2F8DE;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E2F8DE', endColorstr='#79b06e',GradientType=0 );background: -moz-linear-gradient(top,  #E2F8DE 30%, #79b06e 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#E2F8DE), color-stop(90%,#79b06e));background: -webkit-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: -o-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: -ms-linear-gradient(top,  #E2F8DE 30%,#79b06e 90%);background: linear-gradient(#E2F8DE 30%, #79b06e 90%);color: #000000;}.stb-border.stb-section-container {border: 1px none #2982C5;}.stb-side.stb-section-container {background: #2982C5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2982C5', endColorstr='#2944f2',GradientType=0 );background: -moz-linear-gradient(top,  #2982C5 30%, #2944f2 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#2982C5), color-stop(90%,#2944f2));background: -webkit-linear-gradient(top,  #2982C5 30%,#2944f2 90%);background: -o-linear-gradient(top,  #2982C5 30%,#2944f2 90%);background: -ms-linear-gradient(top,  #2982C5 30%,#2944f2 90%);background: linear-gradient(#2982C5 30%, #2944f2 90%);}.stb-side-none.stb-section-container {background: #2982C5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2982C5', endColorstr='#294ee3',GradientType=0 );background: -moz-linear-gradient(top,  #2982C5 30%, #294ee3 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#2982C5), color-stop(90%,#294ee3));background: -webkit-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: -o-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: -ms-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: linear-gradient(#2982C5 30%, #294ee3 90%);}.stb-section_box {background: #2982C5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2982C5', endColorstr='#294ee3',GradientType=0 );background: -moz-linear-gradient(top,  #2982C5 30%, #294ee3 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#2982C5), color-stop(90%,#294ee3));background: -webkit-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: -o-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: -ms-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: linear-gradient(#2982C5 30%, #294ee3 90%);color: #000000;}.stb-section-caption_box {background: #2982C5;background: -moz-linear-gradient(top,  #2982C5 30%, #2944f2 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#2982C5), color-stop(90%,#2944f2));background: -webkit-linear-gradient(top,  #2982C5 30%,#2944f2 90%);background: -o-linear-gradient(top,  #2982C5 30%,#2944f2 90%);background: -ms-linear-gradient(top,  #2982C5 30%,#2944f2 90%);background: linear-gradient(#2982C5 30%, #2944f2 90%);color: #FFFFFF;}.stb-section-body_box {background: #2982C5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2982C5', endColorstr='#294ee3',GradientType=0 );background: -moz-linear-gradient(top,  #2982C5 30%, #294ee3 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#2982C5), color-stop(90%,#294ee3));background: -webkit-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: -o-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: -ms-linear-gradient(top,  #2982C5 30%,#294ee3 90%);background: linear-gradient(#2982C5 30%, #294ee3 90%);color: #000000;}.stb-border.stb-warning-container {border: 1px none #FE9A05;}.stb-side.stb-warning-container {background: #FE9A05;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FE9A05', endColorstr='#504848',GradientType=0 );background: -moz-linear-gradient(top,  #FE9A05 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FE9A05), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #FE9A05 30%,#504848 90%);background: -o-linear-gradient(top,  #FE9A05 30%,#504848 90%);background: -ms-linear-gradient(top,  #FE9A05 30%,#504848 90%);background: linear-gradient(#FE9A05 30%, #504848 90%);}.stb-side-none.stb-warning-container {background: #FEFFD5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FEFFD5', endColorstr='#f0d208',GradientType=0 );background: -moz-linear-gradient(top,  #FEFFD5 30%, #f0d208 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FEFFD5), color-stop(90%,#f0d208));background: -webkit-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: -o-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: -ms-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: linear-gradient(#FEFFD5 30%, #f0d208 90%);}.stb-warning_box {background: #FEFFD5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FEFFD5', endColorstr='#f0d208',GradientType=0 );background: -moz-linear-gradient(top,  #FEFFD5 30%, #f0d208 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FEFFD5), color-stop(90%,#f0d208));background: -webkit-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: -o-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: -ms-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: linear-gradient(#FEFFD5 30%, #f0d208 90%);color: #000000;}.stb-warning-caption_box {background: #FE9A05;background: -moz-linear-gradient(top,  #FE9A05 30%, #504848 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FE9A05), color-stop(90%,#504848));background: -webkit-linear-gradient(top,  #FE9A05 30%,#504848 90%);background: -o-linear-gradient(top,  #FE9A05 30%,#504848 90%);background: -ms-linear-gradient(top,  #FE9A05 30%,#504848 90%);background: linear-gradient(#FE9A05 30%, #504848 90%);color: #FFFFFF;}.stb-warning-body_box {background: #FEFFD5;filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FEFFD5', endColorstr='#f0d208',GradientType=0 );background: -moz-linear-gradient(top,  #FEFFD5 30%, #f0d208 90%);background: -webkit-gradient(linear, left top, left bottom, color-stop(30%,#FEFFD5), color-stop(90%,#f0d208));background: -webkit-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: -o-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: -ms-linear-gradient(top,  #FEFFD5 30%,#f0d208 90%);background: linear-gradient(#FEFFD5 30%, #f0d208 90%);color: #000000;}</style>
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+<meta name="description" content="Loss functions are used to understand and improve machine learning algorithms. Learn about loss functions and how they work with Python code." />
+<link rel="canonical" href="https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Loss Function | Loss Function In Machine Learning" />
+<meta property="og:description" content="Loss functions are used to understand and improve machine learning algorithms. Learn about loss functions and how they work with Python code." />
+<meta property="og:url" content="https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" />
+<meta property="og:site_name" content="Analytics Vidhya" />
+<meta property="article:publisher" content="https://www.facebook.com/AnalyticsVidhya/" />
+<meta property="article:published_time" content="2019-08-14T02:50:26+00:00" />
+<meta property="article:modified_time" content="2020-04-23T17:25:43+00:00" />
+<meta property="og:image" content="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning.jpg" />
+<meta property="og:image:width" content="1020" />
+<meta property="og:image:height" content="520" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@analyticsvidhya" />
+<meta name="twitter:site" content="@analyticsvidhya" />
+<meta name="twitter:label1" content="Written by" />
+<meta name="twitter:data1" content="Khyati Mahendru" />
+<meta name="twitter:label2" content="Est. reading time" />
+<meta name="twitter:data2" content="12 minutes" />
+<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.analyticsvidhya.com/#website","url":"https://www.analyticsvidhya.com/","name":"Analytics Vidhya","description":"Learn everything about Analytics","potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.analyticsvidhya.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/#primaryimage","inLanguage":"en-US","url":"https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning.jpg","contentUrl":"https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning.jpg","width":1020,"height":520},{"@type":"WebPage","@id":"https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/#webpage","url":"https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/","name":"Loss Function | Loss Function In Machine Learning","isPartOf":{"@id":"https://www.analyticsvidhya.com/#website"},"primaryImageOfPage":{"@id":"https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/#primaryimage"},"datePublished":"2019-08-14T02:50:26+00:00","dateModified":"2020-04-23T17:25:43+00:00","author":{"@id":"https://www.analyticsvidhya.com/#/schema/person/d1644df204cb2747bdfd10cbcba3b719"},"description":"Loss functions are used to understand and improve machine learning algorithms. Learn about loss functions and how they work with Python code.","breadcrumb":{"@id":"https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/"]}]},{"@type":"BreadcrumbList","@id":"https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.analyticsvidhya.com/"},{"@type":"ListItem","position":2,"name":"A Detailed Guide to 7 Loss Functions for Machine Learning Algorithms with Python Code"}]},{"@type":"Person","@id":"https://www.analyticsvidhya.com/#/schema/person/d1644df204cb2747bdfd10cbcba3b719","name":"Khyati Mahendru","image":{"@type":"ImageObject","@id":"https://www.analyticsvidhya.com/#personlogo","inLanguage":"en-US","url":"https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=96&d=mm&r=g","caption":"Khyati Mahendru"},"description":"As a student of B.Tech in Mathematics and Computing, I look at everything through a lens of numbers. A story-teller by nature and a problem-solver at the core, I am gaining practical experience in ML and DS as an intern at Analytics Vidhya.","url":"https://www.analyticsvidhya.com/blog/author/khyati/"}]}</script>
+
+<link rel='dns-prefetch' href='//www.analyticsvidhya.com' />
+<link rel='dns-prefetch' href='//s.w.org' />
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/13.1.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.analyticsvidhya.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.8"}};
+			!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){var a=String.fromCharCode;p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,e),0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(a.apply(this,t),0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(!p||!p.fillText)return!1;switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])?!1:!s([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!s([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]);case"emoji":return!s([10084,65039,8205,55357,56613],[10084,65039,8203,55357,56613])}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(n=t.source||{}).concatemoji?c(n.concatemoji):n.wpemoji&&n.twemoji&&(c(n.twemoji),c(n.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='mediaelement-css' href='https://www.analyticsvidhya.com/wp-includes/js/mediaelement/mediaelementplayer-legacy.min.css?ver=4.2.16' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-mediaelement-css' href='https://www.analyticsvidhya.com/wp-includes/js/mediaelement/wp-mediaelement.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='contact-form-7-css' href='https://www.analyticsvidhya.com/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=5.4.2' type='text/css' media='all' />
+<style id='contact-form-7-inline-css' type='text/css'>
+.wpcf7 .wpcf7-recaptcha iframe {margin-bottom: 0;}.wpcf7 .wpcf7-recaptcha[data-align="center"] > div {margin: 0 auto;}.wpcf7 .wpcf7-recaptcha[data-align="right"] > div {margin: 0 0 0 auto;}
+</style>
+<link rel='stylesheet' id='cookie-law-info-css' href='https://www.analyticsvidhya.com/wp-content/plugins/cookie-law-info/public/css/cookie-law-info-public.css?ver=2.0.5' type='text/css' media='all' />
+<link rel='stylesheet' id='cookie-law-info-gdpr-css' href='https://www.analyticsvidhya.com/wp-content/plugins/cookie-law-info/public/css/cookie-law-info-gdpr.css?ver=2.0.5' type='text/css' media='all' />
+<link rel='stylesheet' id='stbCoreCSS-css' href='https://www.analyticsvidhya.com/wp-content/plugins/wp-special-textboxes/css/stb-core.css?ver=5.9.109' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css' href='https://www.analyticsvidhya.com/wp-content/plugins/jetpack/css/jetpack.css?ver=10.0' type='text/css' media='all' />
+<link rel='stylesheet' id='wpss-style-css' href='https://www.analyticsvidhya.com/wp-content/plugins/wordpress-simple-survey/assets/build/css/wpss-pkg.min.css?ver=5.8' type='text/css' media='all' />
+<link rel='stylesheet' id='wpss-custom-db-style-css' href='https://www.analyticsvidhya.com/wp-content/plugins/wordpress-simple-survey/assets/css/custom-performance.css?ver=5.8' type='text/css' media='all' />
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/jquery/jquery.min.js?ver=3.6.0' id='jquery-core-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.3.2' id='jquery-migrate-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" id='cookie-law-info-js-extra'>
+/* <![CDATA[ */
+var Cli_Data = {"nn_cookie_ids":[],"cookielist":[],"non_necessary_cookies":[],"ccpaEnabled":"","ccpaRegionBased":"","ccpaBarEnabled":"","strictlyEnabled":["necessary","obligatoire"],"ccpaType":"gdpr","js_blocking":"1","custom_integration":"","triggerDomRefresh":"","secure_cookies":""};
+var cli_cookiebar_settings = {"animate_speed_hide":"500","animate_speed_show":"500","background":"#f0f3f7","border":"#444","border_on":"","button_1_button_colour":"#000","button_1_button_hover":"#000000","button_1_link_colour":"#fff","button_1_as_button":"1","button_1_new_win":"","button_2_button_colour":"#333","button_2_button_hover":"#292929","button_2_link_colour":"#444","button_2_as_button":"","button_2_hidebar":"","button_3_button_colour":"#000","button_3_button_hover":"#000000","button_3_link_colour":"#fff","button_3_as_button":"1","button_3_new_win":"","button_4_button_colour":"#000","button_4_button_hover":"#000000","button_4_link_colour":"#333333","button_4_as_button":"","button_7_button_colour":"#61a229","button_7_button_hover":"#4e8221","button_7_link_colour":"#fff","button_7_as_button":"1","button_7_new_win":"","font_family":"inherit","header_fix":"1","notify_animate_hide":"1","notify_animate_show":"","notify_div_id":"#cookie-law-info-bar","notify_position_horizontal":"right","notify_position_vertical":"bottom","scroll_close":"","scroll_close_reload":"","accept_close_reload":"","reject_close_reload":"","showagain_tab":"","showagain_background":"#fff","showagain_border":"#000","showagain_div_id":"#cookie-law-info-again","showagain_x_position":"100px","text":"#000","show_once_yn":"","show_once":"10000","logging_on":"","as_popup":"","popup_overlay":"1","bar_heading_text":"","cookie_bar_as":"banner","popup_showagain_position":"bottom-right","widget_position":"left"};
+var log_object = {"ajax_url":"https:\/\/www.analyticsvidhya.com\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/cookie-law-info/public/js/cookie-law-info-public.js?ver=2.0.5' id='cookie-law-info-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/wordpress-simple-survey/assets/build/js/wpss-pkg.min.js?ver=3.0.0' id='wpss-pkg-js'></script>
+<link rel="https://api.w.org/" href="https://www.analyticsvidhya.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.analyticsvidhya.com/wp-json/wp/v2/posts/53398" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.analyticsvidhya.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.analyticsvidhya.com/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 5.8" />
+<link rel='shortlink' href='https://www.analyticsvidhya.com/?p=53398' />
+<link rel="alternate" type="application/json+oembed" href="https://www.analyticsvidhya.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.analyticsvidhya.com%2Fblog%2F2019%2F08%2Fdetailed-guide-7-loss-functions-machine-learning-python-code%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.analyticsvidhya.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.analyticsvidhya.com%2Fblog%2F2019%2F08%2Fdetailed-guide-7-loss-functions-machine-learning-python-code%2F&#038;format=xml" />
+<script type="83c4525b4d828e7064e82a19-text/javascript"><!--
+function powerpress_pinw(pinw_url){window.open(pinw_url, 'PowerPressPlayer','toolbar=0,status=0,resizable=1,width=460,height=320');	return false;}
+//-->
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">/* <![CDATA[ */ jQuery.post("https://www.analyticsvidhya.com/wp-admin/admin-ajax.php", { action: "wmp_update", id: 53398, token: "b1a9fda674" }); /* ]]> */</script><link rel='canonical' href='https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/' />
+</head>
+<body class="av-detail-page">
+<div class="blog-detail-page">
+<div class="overlay"></div>
+<header class="bg-white common-header">
+<div class="container">
+<div class="row">
+<nav class="navbar navbar-expand-lg w-100">
+<a class="navbar-brand" href="https://www.analyticsvidhya.com/blog/">
+<img src="https://av-public-assets.s3.ap-south-1.amazonaws.com/logos/av-logo-svg.svg" alt="Analytics Vidhya" />
+</a>
+
+<div id="AvSearchBox">
+<form method="GET" action="https://www.analyticsvidhya.com">
+<div class="col-auto p-0">
+<label class="sr-only" for="inlineFormSearch">search</label>
+<div class="input-group">
+<input name="s" type="text" class="form-control" id="inlineFormSearch" autocomplete="off" placeholder="Search" value="">
+<div class="input-group-prepend" id="CloseSearch">
+<div class="input-group-text">
+<i class="fas fa-times"></i>
+</div>
+</div>
+</div>
+</div>
+</form>
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<i class="mobile-menu-iocn"></i>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item active megamenu-item">
+<a class="nav-link" href="javascript:void(0);">
+<i class="fas fa-bars mr-2"></i>
+Start Here
+</a>
+<div class="megamenu-row">
+<ul class="menu">
+<li>
+<a target="_blank" href="https://courses.analyticsvidhya.com/courses/Machine-Learning-Certification-Course-for-Beginners?utm_source=blog_navbar&utm_medium=start_here_button">Machine Learning</a>
+</li>
+<li>
+<a target="_blank" href="https://courses.analyticsvidhya.com/courses/getting-started-with-neural-networks?utm_source=blog_navbar&utm_medium=start_here_button">Deep Learning</a>
+</li>
+<li>
+<a target="_blank" href="https://courses.analyticsvidhya.com/courses/Intro-to-NLP?utm_source=blog_navbar&utm_medium=start_here_button">NLP</a>
+</li>
+</ul>
+</div>
+</li>
+<li class="nav-item megamenu-item">
+<a class="nav-link" href="javascript:void(0);">Articles</a>
+<div class="megamenu-row">
+<ul class="menu">
+<li>
+<a href="https://www.analyticsvidhya.com/blog/category/machine-learning/?utm_source=blog_navbar&utm_medium=machine_learning_button">Machine Learning</a>
+</li>
+<li>
+<a href="https://www.analyticsvidhya.com/blog/category/deep-learning/?utm_source=blog_navbar&utm_medium=deep_learning_button">Deep Learning</a>
+</li>
+<li>
+<a href="https://www.analyticsvidhya.com/blog/category/nlp/?utm_source=blog_navbar&utm_medium=_button">NLP</a>
+</li>
+<li>
+<a href="https://www.analyticsvidhya.com/blog/category/computer-vision/?utm_source=blog_navbar&utm_medium=article_button">Computer Vision</a>
+</li>
+<li>
+<a href="https://www.analyticsvidhya.com/blog/category/data-visualization/?utm_source=blog_navbar&utm_medium=_button">Data Visualization</a>
+</li>
+<li>
+<a href="https://www.analyticsvidhya.com/blog/category/career/?utm_source=blog_navbar&utm_medium=career_button">Careers</a>
+</li>
+ <li>
+<a href="javascript:void(0);">More</a>
+<div class="megadrop megadrop-item-link">
+<a href="https://www.analyticsvidhya.com/blog/category/infographics/?utm-source=blog-navbar">Infographics</a>
+<a target="_blank" href="https://jobsnew.analyticsvidhya.com/?utm-source=blog-navbar">Jobs</a>
+<a href="https://www.analyticsvidhya.com/blog/category/podcast/?utm-source=blog-navbar">Podcasts</a>
+<a target="_blank" href="https://courses.analyticsvidhya.com/courses/ebook-machine-learning-simplified?utm_source=bolg-navbar&utm_medium=homepage&utm_campaign=ebook">E-Books</a>
+<a target="_blank" href="https://www.analyticsvidhya.com/corporate/?utm-source=blog-navbar">For Companies</a>
+<a target="_blank" href="https://www.analyticsvidhya.com/datahack-summit-2019/?utm-source=blog-navbar">Datahack Summit</a>
+<a target="_blank" href="https://dsat.analyticsvidhya.com/?utm-source=blog-navbar">DSAT</a>
+<a href="https://www.analyticsvidhya.com/glossary-of-common-statistics-and-machine-learning-terms/?utm-source=blog-navbar">Glossary</a>
+<a target="_blank" href="https://www.analyticsvidhya.com/blog-archive/?utm-source=blog-navbar">Archive</a>
+</div>
+</li>
+<a target="_blank" href="https://editor.analyticsvidhya.com/write-article" class="btn btn-info text-white"> Write an Article</a>
+</ul>
+</div>
+</li>
+<li class="nav-item megamenu-item">
+<a class="nav-link" href="javascript:void(0);">Courses</a>
+<div class="megamenu-row">
+<ul class="menu">
+<li>
+<a target="_blank" href="https://blackbelt.analyticsvidhya.com/plus?utm_source=blog_navbar&utm_medium=blackbelt_button">Certified AI & ML BlackBelt Plus</a>
+</li>
+<li>
+<a target="_blank" href="https://ascendpro.analyticsvidhya.com/?utm_source=blog_navbar&utm_medium=ascend_pro_button">Ascend Pro</a>
+</li>
+<li>
+<a target="_blank" href="https://bootcamp.analyticsvidhya.com/?utm_source=blog_navbar&utm_medium=bootcamp_button">Data Science Immersive Bootcamp</a>
+</li>
+<a target="_blank" href="https://courses.analyticsvidhya.com/collections?utm_source=blog_navbar&utm_medium=all_courses_button" class="btn btn-info text-white"> All Courses</a>
+</ul>
+</div>
+</li>
+<li class="nav-item">
+<a target="_blank" class="nav-link" href="https://datahack.analyticsvidhya.com/contest/job-a-thon-september-2021/?utm_source=blog_navbar&amp;utm_medium=jobathon_button">Job-A-Thon</a>
+</li>
+</ul>
+
+<div class="form-inline navbar-right">
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="#" id="AvSearchBoxBtn">
+<i class="fas fa-search"></i>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link tooltip-light red-tooltip" href="https://editor.analyticsvidhya.com/?utm-source=blog-navbar" data-toggle="tooltip" data-placement="bottom" title="Write an Article" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="24" viewBox="0 0 26 24">
+<path d="M5.51151515,0.0307070707 L14.5547475,0.0307070707 C17.0157576,0.0307070707 19.1119192,1.68 19.7967677,3.92565657 L18.0993939,5.62262626 L18.0993939,5.50868687 C18.0993939,3.55515152 16.5082828,1.9640404 14.5547475,1.9640404 L5.51151515,1.9640404 C3.56040404,1.9640404 1.96727273,3.55757576 1.96727273,5.50868687 L1.96727273,18.5175758 C1.96727273,20.4715152 3.5579798,22.0626263 5.51151515,22.0626263 L14.5547475,22.0626263 C16.5082828,22.0626263 18.0993939,20.4715152 18.0993939,18.5175758 L18.0993939,15.6529293 L20.0327273,13.719596 L20.0327273,18.5175758 C20.0327273,21.5272727 17.5640404,23.9955556 14.5547475,23.9955556 L5.51151515,23.9955556 C2.49979798,23.9955556 0.0335353535,21.5292929 0.0335353535,18.5175758 L0.0335353535,5.50868687 C0.0335353535,2.49454545 2.49737374,0.0307070707 5.51151515,0.0307070707 Z M23.2674747,4.78383838 L22.020202,3.53212121 L12.9688889,12.5777778 L11.6484848,17.0868687 L16.1583838,15.7672727 L25.2056566,6.7220202 L23.9579798,5.46989899 L16.6464646,12.7781818 L15.9547475,12.0913131 L23.2674747,4.78383838 Z M4.83919192,16.5030303 L10.4743434,16.5030303 L9.90868687,18.4367677 L4.83919192,18.4367677 L4.83919192,16.5030303 Z M4.83919192,11.0476768 L12.6723232,11.0476768 L11.8222222,11.8977778 L11.5050505,12.9810101 L4.83919192,12.9810101 L4.83919192,11.0476768 Z M4.83919192,5.59232323 L15.2246465,5.59232323 L15.2246465,7.52606061 L4.83919192,7.52606061 L4.83919192,5.59232323 Z" />
+</svg>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-blue header-sign-in" href="#">Sign in</a>
+</li>
+<li class="nav-item">
+<a class="nav-link btn btn-blue text-white header-join-now" href="#">Join Now</a>
+</li>
+
+<li class="nav-item dropdown header-logged-in" style="display: none;">
+<span class="avatar-placeholder dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<em class="login-short-name"></em>
+
+<img src="" class="login-header-user-image-dropdown-small rounded-circle d-none" alt="user.profilename" />
+</span>
+<div class="dropdown-menu shadow-sm user-info-dropdown py-0 border-0 dropdown-menu-right" aria-labelledby="navbarDropdown">
+<div class="card border-0">
+<div class="card-header border-0">
+<span class="avatar-placeholder">
+<em class="d-none login-short-name"></em>
+<img src="" alt="" class="login-header-user-image-dropdown" />
+</span>
+<h6 class="card-title text-center text-truncate login-header-user-name-dropdown"></h6>
+<small class="text-truncate d-block text-center login-header-user-email-dropdown"></small>
+</div>
+<div class="card-body">
+<a href="https://id.analyticsvidhya.com/accounts/profile/" class="btn btn-outline-light px-4">Manage your AV Account</a>
+<a class="dropdown-item" href="https://datahack.analyticsvidhya.com/user/?utm-source=blog-navbar">My Hackathons</a>
+<a class="dropdown-item" href="https://id.analyticsvidhya.com/accounts/bookmarks/">My Bookmarks</a>
+<a class="dropdown-item" href="https://courses.analyticsvidhya.com/enrollments/?utm-source=blog-navbar">My Courses</a>
+<a class="dropdown-item" href="https://jobsnew.analyticsvidhya.com/jobs/myactive/?utm-source=blog-navbar">My Applied Jobs</a>
+</div>
+<div class="card-footer">
+<a href="https://id.analyticsvidhya.com">Sign Out</a>
+</div> </div>
+</div>
+ </li>
+</ul>
+</div>
+</div>
+</nav>
+</div>
+</div>
+<div class="overlay-menu"></div>
+</header>
+<section id="avFlashSale" class="py-1 alert alert-warning alert-dismissible fade show m-0 rounded-0" style="display:none;" role="alert">
+<div class="container">
+<div class="row">
+<div class="av-sale-content w-100">
+<p></p>
+<a target="_blank" id="hrefId" class="btn btn-light ml-1"></a>
+<div id="clockdiv" style="display:none;">
+<span>
+<h4 class="days" id="day"></h4>
+<sup>D</sup>
+</span>
+<span>
+<h4 class="hours" id="hour"></h4>
+<sup>H</sup>
+</span>
+<span>
+<h4 class="minutes" id="minute"></h4>
+<sup>M</sup>
+</span>
+<span>
+<h4 class="seconds" id="second"></h4>
+<sup>S</sup>
+</span>
+</div>
+</div>
+<button type="button" class="close ml-auto py-1" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+</div>
+</section>
+<section class="breadcrumb-blog">
+<div class="container">
+<div class="row">
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb pl-0">
+<li class="breadcrumb-item"><a href="https://www.analyticsvidhya.com/blog/">Home</a></li>
+</ol>
+</nav>
+</div>
+</div>
+</section>
+<header class="bg-white header-2">
+<div class="container">
+<div class="row">
+<nav class="navbar navbar-expand-lg w-100 p-0">
+<div class="nav nav-tabs mr-auto" id="nav-tab" role="tablist">
+<a class="nav-link login-required" id="interview-questions-tab" data-toggle="tab" href="#interview-questions" role="tab" aria-controls="interview-questions" aria-selected="true">Interview Questions</a>
+<a class="nav-link login-required" id="related-videos-tab" data-toggle="tab" href="#related-videos" role="tab" aria-controls="related-videos" aria-selected="false">Related Videos</a>
+<a class="nav-link login-required" id="related-articles-tab" data-toggle="tab" href="#related-articles" role="tab" aria-controls="related-articles" aria-selected="false">Related Articles</a>
+<a class="nav-link login-required" id="free-courses-tab" data-toggle="tab" href="#free-courses" role="tab" aria-controls="free-courses" aria-selected="false">Free Courses</a>
+</div>
+
+<div class="form-inline navbar-right">
+<ul class="navbar-nav">
+<li class="nav-item">
+<a class="nav-link" href="#">
+<i class="fas fa-search" id="AvSearchBoxBtn"></i>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="https://editor.analyticsvidhya.com/">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/icon/write-article.svg" class="icon-img" alt="write article" />
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-blue header-sign-in" href="#">Sign in</a>
+</li>
+<li class="nav-item">
+<a class="nav-link btn btn-blue text-white header-join-now" href="#" class="header-join-now">Join Now</a>
+</li>
+
+<li class="nav-item dropdown header-logged-in" style="display: none;">
+<span class="avatar-placeholder dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<em class="login-short-name"></em>
+
+<img src="" class="login-header-user-image-dropdown-small rounded-circle d-none" alt="user.profilename" />
+</span>
+<div class="dropdown-menu shadow-sm user-info-dropdown py-0 border-0 dropdown-menu-right" aria-labelledby="navbarDropdown">
+<div class="card border-0">
+<div class="card-header border-0">
+<span class="avatar-placeholder">
+<em class="d-none login-short-name" style="width:100%;flex:0 0 auto;text-align:center;"></em>
+<img src="" alt="" class="login-header-user-image-dropdown" />
+</span>
+<h6 class="card-title text-center text-truncate login-header-user-name-dropdown"></h6>
+<small class="text-truncate d-block text-center login-header-user-email-dropdown"></small>
+</div>
+<div class="card-body">
+<a href="https://id.analyticsvidhya.com/accounts/profile/" class="btn btn-outline-light px-4">Manage your AV Account</a>
+<a class="dropdown-item" href="https://datahack.analyticsvidhya.com/user/?utm-source=blog-navbar">My Hackathons</a>
+<a class="dropdown-item" href="https://id.analyticsvidhya.com/accounts/bookmarks/">My Bookmarks</a>
+<a class="dropdown-item" href="https://courses.analyticsvidhya.com/enrollments/?utm-source=blog-navbar">My Courses</a>
+<a class="dropdown-item" href="https://jobsnew.analyticsvidhya.com/jobs/myactive/?utm-source=blog-navbar">My Applied Jobs</a>
+</div>
+<div class="card-footer">
+<a href="https://id.analyticsvidhya.com">Sign Out</a>
+</div> </div>
+</div>
+</li>
+</ul>
+</div>
+</nav>
+</div>
+</div>
+</header>
+<main class="w-100 float-left">
+
+<div class="page-header">
+<div class="reading-progress-container">
+<div class="progress-bar"></div>
+</div>
+<div class="container">
+<div class="row">
+<div class="col-md-9 pl-0">
+<h1>A Detailed Guide to 7 Loss Functions for Machine Learning Algorithms with Python Code</h1>
+</div>
+<div class="display-content"></div>
+<div class="col-md-3">
+<div id="SocialShare">
+<button type="button">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/icon/pdf.svg" alt="download" class="download-pdf" title="Download PDF" />
+</button>
+<button type="button" class="bookmark bookmark-circle-title"><i class="far fa-bookmark" id="bookmark-article"></i></button>
+<div class="dropdown">
+<button type="button" data-toggle="dropdown" class="dropdown-toggle share" id="socialDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/icon/Share.svg" alt="Share" />
+</button>
+<ul class="dropdown-menu dropdown-menu-right border-0" aria-labelledby="socialDropdownMenu">
+<li>
+<a target="_blank" data-original-title="Facebook" rel="tooltip" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fwww.analyticsvidhya.com%2Fblog%2F2019%2F08%2Fdetailed-guide-7-loss-functions-machine-learning-python-code%2F" class="btn" data-placement="left">
+<i class="fab fa-facebook-f btn btn-facebook"></i>
+<span>Facebook</span>
+</a>
+</li>
+<li>
+<a target="_blank" data-original-title="Twitter" rel="tooltip" href="http://twitter.com/share?text=A Detailed Guide to 7 Loss Functions for Machine Learning Algorithms with Python Code&url=https%3A%2F%2Fwww.analyticsvidhya.com%2Fblog%2F2019%2F08%2Fdetailed-guide-7-loss-functions-machine-learning-python-code%2F" class="btn" data-placement="left">
+<i class="fab fa-twitter btn btn-twitter"></i>
+<span>Twitter</span>
+</a>
+</li>
+<li>
+<a target="_blank" data-original-title="LinkedIn" rel="tooltip" href="http://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.analyticsvidhya.com%2Fblog%2F2019%2F08%2Fdetailed-guide-7-loss-functions-machine-learning-python-code%2F" class="btn" data-placement="left">
+<i class="fab fa-linkedin-in btn btn-linkedin"></i>
+<span>Linkedin</span>
+</a>
+</li>
+<li>
+<a target="_blank" data-original-title="Google+" rel="tooltip" href="https://plus.google.com/share?url=https%3A%2F%2Fwww.analyticsvidhya.com%2Fblog%2F2019%2F08%2Fdetailed-guide-7-loss-functions-machine-learning-python-code%2F" class="btn" data-placement="left">
+<i class="fab fa-youtube btn btn-google"></i>
+<span>Youtube</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="publish-info w-100">
+<a href="https://www.analyticsvidhya.com/blog/author/khyati/">Khyati Mahendru</a> — August 14, 2019 </div>
+<div class="article-categories">
+<a href="https://www.analyticsvidhya.com/blog/category/intermediate/">Intermediate</a>
+<a href="https://www.analyticsvidhya.com/blog/category/listicle/">Listicle</a>
+<a href="https://www.analyticsvidhya.com/blog/category/machine-learning/">Machine Learning</a>
+<a href="https://www.analyticsvidhya.com/blog/category/python-2/">Python</a>
+<a href="https://www.analyticsvidhya.com/blog/category/statistics/">Statistics</a>
+</div>
+<div class="col-lg-9 col-md-12 col-sm-12 pl-0 pr-0">
+<section class="av-details-page target w-100" id="1">
+<h2>Overview</h2>
+<ul>
+<li>What are loss functions? And how do they work in machine learning algorithms? Find out in this article</li>
+<li>Loss functions are actually at the heart of these techniques that we regularly use</li>
+<li>This article covers multiple loss functions, where they work, and how you can code them in Python</li>
+</ul>
+<p>&nbsp;</p>
+<h2>Introduction</h2>
+<p>Picture this &#8211; you&#8217;ve trained a machine learning model on a given dataset and are ready to put it in front of your client. But how can you be sure that this model will give the optimum result? Is there a metric or a technique that will help you quickly evaluate your model on the dataset?</p>
+<p>Yes &#8211; and that, in a nutshell, is where loss functions come into play in machine learning.</p>
+<p><span style="font-weight: 400;">Loss functions are at the heart of the <a href="https://www.analyticsvidhya.com/blog/2017/09/common-machine-learning-algorithms/?utm_source=blog&amp;utm_medium=detailed-guide-understanding-loss-functions-machine-learning-python-code" target="_blank" rel="noopener noreferrer">machine learning algorithms</a> we love to use. But I&#8217;ve seen the majority of beginners and enthusiasts become quite confused regarding how and where to use them.</span></p>
+<p><span style="font-weight: 400;"><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning.jpg"><img loading="lazy" class="aligncenter wp-image-54151 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning.jpg" alt="loss function" width="1020" height="520" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning.jpg 1020w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning-300x153.jpg 300w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning-768x392.jpg 768w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/Loss-Functions-in-Machine-Learning-850x433.jpg 850w" sizes="(max-width: 1020px) 100vw, 1020px" /></a> </span></p>
+<p>They&#8217;re not difficult to understand and will enhance your understand of machine learning algorithms infinitely. So, what are loss functions and how can you grasp their meaning?</p>
+<p><span style="font-weight: 400;">In this article, I will discuss 7 common loss functions used in <a href="https://courses.analyticsvidhya.com/courses/applied-machine-learning-beginner-to-professional?utm_source=blog&amp;utm_medium=detailed-guide-understanding-loss-functions-machine-learning-python-code" target="_blank" rel="noopener noreferrer">machine learning</a> and explain where each of them is used. </span>We have a lot to cover in this article so let&#8217;s begin!</p>
+<p><em>Loss functions are one part of the entire machine learning journey you will take. Here&#8217;s the perfect course to help you get started and make you industry-ready:</em></p>
+<ul>
+<li><em><a href="https://courses.analyticsvidhya.com/courses/applied-machine-learning-beginner-to-professional?utm_source=blog&amp;utm_medium=detailed-guide-understanding-loss-functions-machine-learning-python-code" target="_blank" rel="noopener noreferrer">Applied Machine Learning &#8211; Beginner to Professional</a></em></li>
+</ul>
+<p>&nbsp;</p>
+<h2>Table of Contents</h2>
+<ul>
+<li>What are Loss Functions?</li>
+<li>Regression Loss Functions
+<ul>
+<li>Squared Error Loss</li>
+<li>Absolute Error Loss</li>
+<li>Huber Loss</li>
+</ul>
+</li>
+<li>Binary Classification Loss Functions
+<ul>
+<li>Binary Cross-Entropy</li>
+<li>Hinge Loss</li>
+</ul>
+</li>
+<li>Multi-class Classification Loss Functions
+<ul>
+<li>Multi-class Cross Entropy Loss</li>
+<li>Kullback Leibler Divergence Loss</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<h2>What are Loss Functions?</h2>
+<p><span style="font-weight: 400;">Let&#8217;s say you are on the top of a hill and need to climb down. How do you decide where to walk towards?</span></p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/loss_function_ml.jpg"><img loading="lazy" class="aligncenter size-full wp-image-55945" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/loss_function_ml.jpg" alt="loss_function_ml" width="1197" height="463" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/loss_function_ml.jpg 1197w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/loss_function_ml-300x116.jpg 300w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/loss_function_ml-768x297.jpg 768w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/loss_function_ml-850x329.jpg 850w" sizes="(max-width: 1197px) 100vw, 1197px" /></a></p>
+<p><span style="font-weight: 400;">Here&#8217;s what I would do:</span></p>
+<ul>
+<li><span style="font-weight: 400;">Look around to see all the possible paths</span></li>
+<li><span style="font-weight: 400;">Reject the ones going up. This is because these paths would actually co</span><span style="font-weight: 400;">st me more energy and make my task even more difficult</span></li>
+<li><span style="font-weight: 400;">Finally, take the path that I <strong><em>think</em> </strong>has the most slope downhill</span></li>
+</ul>
+<p><span style="font-weight: 400;">This intuition that I just judged my decisions against? This is exactly what a loss function provides.</span></p>
+<blockquote><p><span style="font-weight: 400;">A loss function maps decisions to their associated costs.</span></p></blockquote>
+<p>Deciding to go up the slope will cost us energy and time. Deciding to go down will benefit us. Therefore, it has a negative cost.</p>
+<p><span style="font-weight: 400;">In <a href="https://www.analyticsvidhya.com/blog/2017/09/common-machine-learning-algorithms/?utm_source=blog&amp;utm_medium=detailed-guide-understanding-loss-functions-machine-learning-python-code">supervised machine learning</a> algorithms, we want to <strong>minimize</strong> the error for each training example during the learning process. This is done using some optimization strategies like <a href="https://www.analyticsvidhya.com/blog/2017/03/introduction-to-gradient-descent-algorithm-along-its-variants/?utm_source=blog&amp;utm_medium=detailed-guide-understanding-loss-functions-machine-learning-python-code" target="_blank" rel="noopener noreferrer">gradient descent</a>. <em>And this error comes from the loss function.</em></span></p>
+<p>&nbsp;</p>
+<h3>What&#8217;s the Difference between a Loss Function and a Cost Function?</h3>
+<p>I want to emphasize this here &#8211;  although <em><strong>cost function</strong></em> and <em><strong>loss function</strong></em> are synonymous and used interchangeably, they are different.</p>
+<p>A loss function is for a single training example. It is also sometimes called an <strong>error function</strong>. A cost function, on the other hand, is the <strong>average loss</strong> over the entire training dataset. The optimization strategies aim at minimizing the cost function.</p>
+<p>&nbsp;</p>
+<h2>Regression Loss Functions</h2>
+<p>You must be quite familiar with linear regression at this point. It deals with modeling a linear relationship between a <strong>dependent variable</strong>, Y, and several <strong>independent variables,</strong> X_i&#8217;s. Thus, we essentially fit a line in space on these variables.</p>
+<pre>Y = a0 + a1 * X1 + a2 * X2 + ....+ an * Xn</pre>
+<p>We will use the given data points to find the coefficients a0, a1, &#8230;, an.</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/05/1200px-Linear_regression.svg_.png"><img loading="lazy" class="wp-image-53406 size-medium aligncenter" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/05/1200px-Linear_regression.svg_-300x199.png" alt="loss function machine learning" width="300" height="199" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/05/1200px-Linear_regression.svg_-300x199.png 300w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/05/1200px-Linear_regression.svg_-768x508.png 768w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/05/1200px-Linear_regression.svg_-850x562.png 850w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/05/1200px-Linear_regression.svg_.png 1200w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p style="text-align: center;"><em>Source: Wikipedia</em></p>
+<p>We will use the famous <a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_boston.html">Boston Housing Dataset</a> for understanding this concept. And to keep things simple, we will use only one feature &#8211; the <em>Average number of rooms per dwelling</em> (X) &#8211; to predict the dependent variable &#8211; <em>Median Value</em> (Y) of houses in $1000&#8242; s.</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/boston.png"><img loading="lazy" class="aligncenter wp-image-53472 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/boston.png" alt="loss function" width="386" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/boston.png 386w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/boston-300x207.png 300w" sizes="(max-width: 386px) 100vw, 386px" /></a></p>
+<p>We will use <strong>Gradient Descent</strong> as an optimization strategy to find the regression line. I will not go into the intricate details about Gradient Descent, but here is a reminder of the Weight Update Rule:</p>
+<div id="attachment_53471" style="width: 310px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-53471" loading="lazy" class="size-medium wp-image-53471" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/weights-300x148.jpg" alt="" width="300" height="148" /><p id="caption-attachment-53471" class="wp-caption-text">Source: Hackernoon.com</p></div>
+<p>Here, theta_j is the weight to be updated, alpha is the learning rate and J is the cost function. The cost function is parameterized by theta. <strong>Our aim is to find the value of theta which yields minimum overall cost.</strong></p>
+<p><em>You can get an in-depth explanation of Gradient Descent and how it works <a href="https://www.analyticsvidhya.com/blog/2017/03/introduction-to-gradient-descent-algorithm-along-its-variants/" target="_blank" rel="noopener noreferrer">here</a>.</em></p>
+<p>I have defined the steps that we will follow for each loss function below:</p>
+<ol>
+<li>Write the expression for our predictor function, f(X) and identify the parameters that we need to find</li>
+<li>Identify the loss to use for each training example</li>
+<li>Find the expression for the Cost Function &#8211; the average loss on all examples</li>
+<li>Find the gradient of the Cost Function with respect to each unknown parameter</li>
+<li>Decide on the learning rate and run the weight update rule for a fixed number of iterations</li>
+</ol>
+<p>&nbsp;</p>
+<h3>1. Squared Error Loss</h3>
+<p>Squared Error loss for each training example, also known as <strong>L2 Loss</strong>, is the square of the difference between the actual and the predicted values:</p>
+<p><img loading="lazy" class="aligncenter size-full wp-image-55681" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/mse.jpg.jpg" alt="" width="289" height="96" /></p>
+<p>The corresponding cost function is the <strong>Mean</strong> of these<strong> Squared Errors (MSE)</strong>.</p>
+<p>I encourage you to try and find the gradient for gradient descent yourself before referring to the code below.</p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/d5c0021c94c96c3003b68a6adda94705.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/d5c0021c94c96c3003b68a6adda94705">Gist</a>.</noscript></div>
+<p>I used this code on the Boston data for different values of the learning rate for 500 iterations each:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mse_eg1.png"><img loading="lazy" class="aligncenter wp-image-53481 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mse_eg1.png" alt="loss function" width="392" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mse_eg1.png 392w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mse_eg1-300x204.png 300w" sizes="(max-width: 392px) 100vw, 392px" /></a></p>
+<p><em>Here&#8217;s a task for you. Try running the code for a learning rate of 0.1 again for 500 iterations. Let me know your observations and any possible explanations in the comments section.</em></p>
+<p>Let&#8217;s talk a bit more about the MSE loss function. It is a positive quadratic function (of the form ax^2 + bx + c where a &gt; 0). Remember how it looks graphically?</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/graph_20190531_101207.png"><img loading="lazy" class="aligncenter wp-image-53476 size-medium" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/graph_20190531_101207-300x185.png" alt="loss function" width="300" height="185" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/graph_20190531_101207-300x185.png 300w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/graph_20190531_101207-768x474.png 768w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/graph_20190531_101207.png 850w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>A quadratic function only has a global minimum. Since there are no local minima, we will never get stuck in one. Hence, it is always guaranteed that Gradient Descent will converge (<em>if it converges at all</em>) to the global minimum.</p>
+<p>The MSE loss function penalizes the model for making large errors by squaring them. Squaring a large quantity makes it even larger, right? But there&#8217;s a caveat. This property makes the MSE cost function less robust to outliers. Therefore,<strong><em> it should not be used if our data is prone to many outliers.</em></strong></p>
+<p>&nbsp;</p>
+<h3>2. Absolute Error Loss</h3>
+<p>Absolute Error for each training example is the distance between the predicted and the actual values, irrespective of the sign. Absolute Error is also known as the <strong>L1 loss:</strong></p>
+<p><img loading="lazy" class="aligncenter size-full wp-image-55682" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/mae.jpg.jpg" alt="" width="277" height="94" /></p>
+<p>As I mentioned before, the cost is the <strong>Mean</strong> of these <strong>Absolute Errors (MAE)</strong>.</p>
+<p><strong><em>The MAE cost is more robust to outliers as compared to MSE</em>.</strong> However, handling the absolute or modulus operator in mathematical equations is not easy. I&#8217;m sure a lot of you must agree with this! We can consider this as a disadvantage of MAE.</p>
+<p>Here is the code for the <em>update_weight</em> function with MAE cost:</p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/602d45758e2f9a48fc7fef5460ca67c1.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/602d45758e2f9a48fc7fef5460ca67c1">Gist</a>.</noscript></div>
+<p>We get the below plot after running the code for 500 iterations with different learning rates:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mae_eg.png"><img loading="lazy" class="aligncenter wp-image-53479 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mae_eg.png" alt="loss function" width="396" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mae_eg.png 396w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mae_eg-300x202.png 300w" sizes="(max-width: 396px) 100vw, 396px" /></a></p>
+<p>&nbsp;</p>
+<h3>3. Huber Loss</h3>
+<p>The Huber loss combines the best properties of MSE and MAE. It is quadratic for smaller errors and is linear otherwise (and similarly for its gradient). It is identified by its <em>delta</em> parameter:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/huber.jpg.jpg"><img loading="lazy" class="aligncenter wp-image-55683 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/huber.jpg.jpg" alt="loss function" width="513" height="202" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/huber.jpg.jpg 513w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/huber.jpg-300x118.jpg 300w" sizes="(max-width: 513px) 100vw, 513px" /></a></p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/b28d98b54d369957d475e70f5ca58347.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/b28d98b54d369957d475e70f5ca58347">Gist</a>.</noscript></div>
+<p>We obtain the below plot for 500 iterations of weight update at a learning rate of 0.0001 for different values of<em> the delta </em>parameter:<a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/huber_eg.png"><img loading="lazy" class="aligncenter wp-image-53487 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/huber_eg.png" alt="loss function" width="392" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/huber_eg.png 392w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/huber_eg-300x204.png 300w" sizes="(max-width: 392px) 100vw, 392px" /></a></p>
+<p>Huber loss is more robust to outliers than MSE. <em><strong>It is used in <a href="https://en.wikipedia.org/wiki/Robust_regression">Robust Regression</a>, <a href="https://en.wikipedia.org/wiki/M-estimator">M-estimation</a> and <a href="https://en.wikipedia.org/wiki/Additive_model">Additive Modelling</a>. A variant of Huber Loss is also used in classification.</strong></em></p>
+<p>&nbsp;</p>
+<h2>Binary Classification Loss Functions</h2>
+<p>The name is pretty self-explanatory. Binary Classification refers to assigning an object into one of two classes. This classification is based on a rule applied to the input feature vector. For example, classifying an email as <em>spam</em> or <em>not spam</em> based on, say its subject line, is binary classification.</p>
+<p>I will illustrate these binary classification loss functions on the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html" target="_blank" rel="noopener noreferrer">Breast Cancer dataset</a>.</p>
+<p><em>We want to classify a tumor as<strong> &#8216;Malignant&#8217;</strong> or<strong> &#8216;Benign&#8217;</strong> based on features like average radius, area, perimeter, etc. For simplification, we will use only two input features (X_1 and X_2) namely <strong>&#8216;worst area&#8217;</strong> and<strong> &#8216;mean symmetry&#8217;</strong> for classification. The target value Y can be 0 (Malignant) or 1 (Benign).</em></p>
+<p>Here is a scatter plot for our data:<br />
+<a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/cancer.png"><img loading="lazy" class="aligncenter wp-image-53492 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/cancer.png" alt="loss function" width="395" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/cancer.png 395w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/cancer-300x202.png 300w" sizes="(max-width: 395px) 100vw, 395px" /></a></p>
+<p>&nbsp;</p>
+<h3>1. Binary Cross Entropy Loss</h3>
+<p><strong>Let us start by understanding the term &#8216;entropy&#8217;.</strong> Generally, we use entropy to indicate disorder or uncertainty. It is measured for a random variable X with probability distribution p(X):</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/entropy.jpg1.jpg"><img loading="lazy" class="aligncenter wp-image-53498 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/entropy.jpg1.jpg" alt="loss function" width="418" height="132" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/entropy.jpg1.jpg 418w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/entropy.jpg1-300x95.jpg 300w" sizes="(max-width: 418px) 100vw, 418px" /></a></p>
+<p>The negative sign is used to make the overall quantity positive.</p>
+<blockquote><p>A greater value of entropy for a probability distribution indicates a greater uncertainty in the distribution. Likewise, a smaller value indicates a more certain distribution.</p></blockquote>
+<p>This makes binary cross-entropy suitable as a loss function &#8211; <strong>you want to minimize its value. </strong>We use <strong>binary cross-entropy</strong> loss for classification models which output a probability <em>p</em>.</p>
+<pre>Probability that the element belongs to class 1 (or positive class) = p
+Then, the probability that the element belongs to class 0 (or negative class) = 1 - p</pre>
+<p>Then, the cross-entropy loss for output label y (can take values 0 and 1) and predicted probability p is defined as:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/log-loss.jpg.jpg"><img loading="lazy" class="aligncenter wp-image-53501 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/log-loss.jpg.jpg" alt="loss function" width="512" height="93" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/log-loss.jpg.jpg 512w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/log-loss.jpg-300x54.jpg 300w" sizes="(max-width: 512px) 100vw, 512px" /></a></p>
+<p>This is also called <strong>Log-Loss. </strong>To calculate the probability p, we can use the sigmoid function. Here, z is a function of our input features:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/sig.jpg.jpg"><img loading="lazy" class="aligncenter wp-image-53502 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/sig.jpg.jpg" alt="loss function" width="134" height="63" /></a></p>
+<p>The range of the sigmoid function is [0, 1] which makes it suitable for calculating probability.</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/sigmoid.png"><img loading="lazy" class="aligncenter wp-image-53503 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/sigmoid.png" alt="loss function" width="275" height="183" /></a></p>
+<p>Try to find the gradient yourself and then look at the code for the <em>update_weight</em> function below.</p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/b7d7991f8cbaf09b5c43643f726ba3d8.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/b7d7991f8cbaf09b5c43643f726ba3d8">Gist</a>.</noscript></div>
+<p>I got the below plot on using the weight update rule for 1000 iterations with different values of alpha:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/bce_eg1.png"><img loading="lazy" class="aligncenter wp-image-53526 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/bce_eg1.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/bce_eg1.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/bce_eg1-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a></p>
+<p>&nbsp;</p>
+<h3>2. Hinge Loss</h3>
+<p><em><strong>Hinge loss is primarily used with <a href="https://www.analyticsvidhya.com/blog/2017/09/understaing-support-vector-machine-example-code/" target="_blank" rel="noopener noreferrer">Support Vector Machine (SVM)</a> Classifiers with class labels -1 and 1</strong></em>. So make sure you change the label of the &#8216;Malignant&#8217; class in the dataset from 0 to -1.</p>
+<blockquote><p>Hinge Loss not only penalizes the wrong predictions but also the right predictions that are not confident.</p></blockquote>
+<p>Hinge loss for an input-output pair (x, y) is given as:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/hinge.jpg.jpg"><img loading="lazy" class="aligncenter wp-image-55684 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/hinge.jpg.jpg" alt="hinge loss" width="421" height="101" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/hinge.jpg.jpg 421w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/08/hinge.jpg-300x72.jpg 300w" sizes="(max-width: 421px) 100vw, 421px" /></a></p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/78962ad9bd6d567cc5f97d97695ca3a7.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/78962ad9bd6d567cc5f97d97695ca3a7">Gist</a>.</noscript></div>
+<p>After running the update function for 2000 iterations with three different values of alpha, we obtain this plot:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/hinge_eg.png"><img loading="lazy" class="aligncenter wp-image-53525 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/hinge_eg.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/hinge_eg.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/hinge_eg-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a></p>
+<p><em><strong>Hinge Loss simplifies the mathematics for SVM while maximizing the loss (as compared to Log-Loss). It is used when we want to make real-time decisions with not a laser-sharp focus on accuracy.</strong></em></p>
+<p>&nbsp;</p>
+<h2>Multi-Class Classification Loss Functions</h2>
+<p>Emails are not just classified as spam or not spam (this isn&#8217;t the 90s anymore!). They are classified into various other categories &#8211; Work, Home, Social, Promotions, etc. This is a <a href="https://www.analyticsvidhya.com/blog/2017/08/introduction-to-multi-label-classification/" target="_blank" rel="noopener noreferrer">Multi-Class Classification</a> use case.</p>
+<p>We&#8217;ll use the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html" target="_blank" rel="noopener noreferrer">Iris Dataset</a> for understanding the remaining two loss functions. We will use 2 features X_1, <strong>Sepal length</strong> and feature X_2, <strong>Petal width,</strong> to predict the class (Y) of the Iris flower &#8211; <strong>Setosa, Versicolor or Virginica</strong></p>
+<p>Our task is to implement the classifier using a neural network model and the in-built Adam optimizer in Keras. This is because as the number of parameters increases, the math, as well as the code, will become difficult to comprehend.</p>
+<p>If you are new to Neural Networks, I highly recommend reading <a href="https://medium.com/analytics-vidhya/build-your-first-neural-network-model-on-a-structured-dataset-using-keras-d9e7de5c6724" target="_blank" rel="noopener noreferrer">this article</a> first.</p>
+<p>Here is the scatter plot for our data:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/iris.png"><img loading="lazy" class="aligncenter wp-image-53531 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/iris.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/iris.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/iris-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a></p>
+<p>&nbsp;</p>
+<h3>1. Multi-Class Cross Entropy Loss</h3>
+<p>The multi-class cross-entropy loss is a generalization of the Binary Cross Entropy loss. The loss for input vector X_i and the corresponding one-hot encoded target vector Y_i is:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce.jpg1.jpg"><img loading="lazy" class="aligncenter wp-image-53534 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce.jpg1.jpg" alt="loss function" width="679" height="210" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce.jpg1.jpg 679w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce.jpg1-300x93.jpg 300w" sizes="(max-width: 679px) 100vw, 679px" /></a></p>
+<p>We use the softmax function to find the probabilities p_ij:</p>
+<div id="attachment_53533" style="width: 525px" class="wp-caption aligncenter"><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/softmax.jpg.jpg"><img aria-describedby="caption-attachment-53533" loading="lazy" class="wp-image-53533 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/softmax.jpg.jpg" alt="loss function" width="515" height="95" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/softmax.jpg.jpg 515w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/softmax.jpg-300x55.jpg 300w" sizes="(max-width: 515px) 100vw, 515px" /></a><p id="caption-attachment-53533" class="wp-caption-text"><em>Source: Wikipedia</em></p></div>
+<blockquote><p>&#8220;Softmax is implemented through a neural network layer just before the output layer. The Softmax layer must have the same number of nodes as the output layer.&#8221; Google Developer&#8217;s Blog</p></blockquote>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/soft.jpg.jpg"><img loading="lazy" class="aligncenter wp-image-53536 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/soft.jpg.jpg" alt="loss function" width="463" height="322" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/soft.jpg.jpg 463w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/soft.jpg-300x209.jpg 300w" sizes="(max-width: 463px) 100vw, 463px" /></a></p>
+<p>Finally, our output is the class with the maximum probability for the given input.</p>
+<p>We build a model using an input layer and an output layer and compile it with different learning rates. Specify the loss parameter as <strong>&#8216;categorical_crossentropy&#8217;</strong> in the model.compile() statement:</p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/312a6d0f2cfe03e9f0f3964bf2e54460.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/312a6d0f2cfe03e9f0f3964bf2e54460">Gist</a>.</noscript></div>
+<p>Here are the plots for cost and accuracy respectively after training for 200 epochs:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg12.png"><img loading="lazy" class="aligncenter wp-image-53991 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg12.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg12.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg12-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a> <a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg22.png"><img loading="lazy" class="aligncenter wp-image-53992 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg22.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg22.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/mce_eg22-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a></p>
+<p>&nbsp;</p>
+<h3>2. KL-Divergence</h3>
+<p>The <strong>Kullback-Liebler</strong> <strong>Divergence</strong> is a measure of how a probability distribution differs from another distribution. A KL-divergence of zero indicates that the distributions are identical.</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl.jpg1.jpg"><img loading="lazy" class="aligncenter wp-image-53557 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl.jpg1.jpg" alt="loss function" width="624" height="280" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl.jpg1.jpg 624w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl.jpg1-300x135.jpg 300w" sizes="(max-width: 624px) 100vw, 624px" /></a></p>
+<p>Notice that the divergence function is not symmetric.</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_.jpg.jpg"><img loading="lazy" class="aligncenter wp-image-53540 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_.jpg.jpg" alt="loss function" width="214" height="85" /></a></p>
+<p>This is why KL-Divergence cannot be used as a distance metric.</p>
+<p>I will describe the basic approach of using KL-Divergence as a loss function without getting into its math. We want to approximate the <em><strong>true</strong></em> probability distribution P of our target variables with respect to the input features, given some <em><strong>approximate</strong></em> distribution Q.  Since KL-Divergence is not symmetric, we can do this in two ways:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_1.jpg.jpg"><img loading="lazy" class="alignleft wp-image-53551 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_1.jpg.jpg" alt="loss function" width="560" height="71" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_1.jpg.jpg 560w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_1.jpg-300x38.jpg 300w" sizes="(max-width: 560px) 100vw, 560px" /></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>The first approach is used in Supervised learning, the second in Reinforcement Learning. KL-Divergence is functionally similar to multi-class cross-entropy and is also called relative entropy of P with respect to Q:</p>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_2.jpg1.jpg"><img loading="lazy" class="aligncenter wp-image-53558 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_2.jpg1.jpg" alt="loss function" width="540" height="129" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_2.jpg1.jpg 540w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_2.jpg1-300x72.jpg 300w" sizes="(max-width: 540px) 100vw, 540px" /></a></p>
+<p>We specify the <strong>&#8216;kullback_leibler_divergence&#8217;</strong> as the value of the loss parameter in the compile() function as we did before with the multi-class cross-entropy loss.</p>
+<div class="oembed-gist"><script src="https://gist.github.com/KhyatiMahendru/a186690d3f8018920b135e1b4b5d71c4.js" type="83c4525b4d828e7064e82a19-text/javascript"></script><noscript>View the code on <a href="https://gist.github.com/KhyatiMahendru/a186690d3f8018920b135e1b4b5d71c4">Gist</a>.</noscript></div>
+<p><a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg11.png"><img loading="lazy" class="aligncenter wp-image-53993 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg11.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg11.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg11-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a> <a href="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg21.png"><img loading="lazy" class="aligncenter wp-image-53994 size-full" src="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg21.png" alt="loss function" width="389" height="266" srcset="https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg21.png 389w, https://cdn.analyticsvidhya.com/wp-content/uploads/2019/06/kl_eg21-300x205.png 300w" sizes="(max-width: 389px) 100vw, 389px" /></a></p>
+<p><em><strong>KL-Divergence is used more commonly to approximate complex functions than in multi-class classification. We come across KL-Divergence frequently while playing with deep-generative models like Variational Autoencoders (VAEs).</strong></em></p>
+<p>&nbsp;</p>
+<h2>End Notes</h2>
+<p>Woah! We have covered a lot of ground here. Give yourself a pat on your back for making it all the way to the end. This was quite a comprehensive list of loss functions we typically use in machine learning.</p>
+<p>I would suggest going through this article a couple of times more as you proceed with your machine learning journey. This isn&#8217;t a one-time effort. It will take a few readings and experience to understand how and where these loss functions work.</p>
+<p>Make sure to experiment with these loss functions and let me know your observations down in the comments. Also, let me know other topics that you would like to read about. I will do my best to cover them in future articles.</p>
+<p>Meanwhile, make sure you check out our comprehensive beginner-level machine learning course:</p>
+<ul>
+<li><a href="https://courses.analyticsvidhya.com/courses/applied-machine-learning-beginner-to-professional?utm_source=blog&amp;utm_medium=detailed-guide-understanding-loss-functions-machine-learning-python-code" target="_blank" rel="noopener noreferrer">Applied Machine Learning &#8211; Beginner to Professional</a></li>
+</ul>
+<div id='jp-relatedposts' class='jp-relatedposts'>
+</div> </section>
+
+<div class="blog-tag-row">
+<a href="https://www.analyticsvidhya.com/blog/tag/loss-functions/">loss functions</a><a href="https://www.analyticsvidhya.com/blog/tag/loss-functions-machine-learning/">loss functions machine learning</a><a href="https://www.analyticsvidhya.com/blog/tag/loss-functions-statistics/">loss functions statistics</a><a href="https://www.analyticsvidhya.com/blog/tag/machine-learning/">machine learning</a><a href="https://www.analyticsvidhya.com/blog/tag/regression-loss/">regression loss</a><a href="https://www.analyticsvidhya.com/blog/tag/statistics/">statistics</a> </div>
+</div>
+<div class="col-lg-3 col-md-12 col-sm-12">
+<div class="widget_text display-for-right mb-3" id="custom_html-5"><div class="textwidget custom-html-widget"><a href="https://courses.analyticsvidhya.com/courses/Machine-Learning-Certification-Course-for-Beginners?utm_source=blog&amp;utm_medium=side_banner" target="_blank" rel="noopener">
+<img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2021/09/free-ml-course.png" /></a></div></div><div class="detail-page-side-bar change-to-sticky">
+<aside id="navTarget">
+<h6>Table of contents</h6>
+<ul class="toc nav navbar-nav">
+</ul>
+</aside>
+</div>
+</div>
+</div>
+</div>
+</main>
+<section class="bottom-page-cotainer w-100 float-left">
+<div class="container">
+<div class="row">
+<div class="col-lg-9 col-md-12 col-sm-12 flet-gap">
+
+<div class="author-row">
+<h3>About the Author</h3>
+<div class="avatar">
+<img alt='' src='https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=150&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=300&#038;d=mm&#038;r=g 2x' class='avatar avatar-150 photo' height='150' width='150' loading='lazy' /> </div>
+<div class="avatar-info">
+<h6><a href="https://www.analyticsvidhya.com/blog/author/khyati/">Khyati Mahendru</a></h6>
+<p>As a student of B.Tech in Mathematics and Computing, I look at everything through a lens of numbers. A story-teller by nature and a problem-solver at the core, I am gaining practical experience in ML and DS as an intern at Analytics Vidhya.</p>
+</div>
+</div>
+
+<div class="top-author">
+<h3>Our Top Authors</h3>
+<ul>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/avcontentteam/'>View Profile</a>" title="Analytics Vidhya">
+<a href="https://www.analyticsvidhya.com/blog/author/avcontentteam/"><img src="https://secure.gravatar.com/avatar/b1695f8419f5f7158d4a31e2c4739055?s=100&d=mm&r=g" alt="Analytics Vidhya" /></a>
+</li>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/guest-blog/'>View Profile</a>" title="Guest Blog">
+<a href="https://www.analyticsvidhya.com/blog/author/guest-blog/"><img src="https://secure.gravatar.com/avatar/a8df32b7e4a5b0862132757918c78578?s=100&d=mm&r=g" alt="Guest Blog" /></a>
+</li>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/tavish1/'>View Profile</a>" title="Tavish Srivastava">
+<a href="https://www.analyticsvidhya.com/blog/author/tavish1/"><img src="https://secure.gravatar.com/avatar/51bf7a2a1f2a0dd3a1012fa4cf5a9e80?s=100&d=mm&r=g" alt="Tavish Srivastava" /></a>
+</li>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/aishwaryasingh/'>View Profile</a>" title="Aishwarya Singh">
+<a href="https://www.analyticsvidhya.com/blog/author/aishwaryasingh/"><img src="https://secure.gravatar.com/avatar/9674ea7760b6955e65709184e41f12c2?s=100&d=mm&r=g" alt="Aishwarya Singh" /></a>
+</li>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/ram_dewani/'>View Profile</a>" title="Ram Dewani">
+<a href="https://www.analyticsvidhya.com/blog/author/ram_dewani/"><img src="https://secure.gravatar.com/avatar/94141be13f4e38ce5f33c7b6437c0f77?s=100&d=mm&r=g" alt="Ram Dewani" /></a>
+</li>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/jalfaizy/'>View Profile</a>" title="Faizan Shaikh">
+<a href="https://www.analyticsvidhya.com/blog/author/jalfaizy/"><img src="https://secure.gravatar.com/avatar/fd90df6aafd127cc243609d0e1a97621?s=100&d=mm&r=g" alt="Faizan Shaikh" /></a>
+</li>
+<li class="av-pop" tabindex="0" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="<a href='https://www.analyticsvidhya.com/blog/author/aniruddha/'>View Profile</a>" title="Aniruddha Bhandari">
+<a href="https://www.analyticsvidhya.com/blog/author/aniruddha/"><img src="https://secure.gravatar.com/avatar/7da45d7e6e01171012ab86cbc13a48dc?s=100&d=mm&r=g" alt="Aniruddha Bhandari" /></a>
+</li>
+</ul>
+</div>
+
+<div class="download-app">
+<div class="download-row">
+<h3>
+Download
+<span>Analytics Vidhya App for the Latest blog/Article</span>
+</h3>
+<div class="download-icon">
+<a rel="nofollow" href="https://play.google.com/store/apps/details?id=com.analyticsvidhya.android" target="_blank">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/images/play_store_icon.svg" alt='play store'>
+</a>
+<a rel="nofollow" href="https://apps.apple.com/us/app/analytics-vidhya/id1470025572" target="_blank">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/images/app_Store_icon.svg" alt='App Store'>
+</a>
+</div>
+</div>
+</div>
+
+<div class="blog-two-container">
+<div class="blog-two-row">
+<div class="col-md-6 float-left">
+<small>Previous Post</small>
+<a href="">
+<span>
+Everything You Ever Wanted to Know About Setting up Python on Windows, Linux and Mac </span>
+</a>
+</div>
+<div class="col-md-6 float-left">
+<small>Next Post</small>
+<a href="">
+<span>
+Innoplexus Sentiment Analysis Hackathon: Top 3 Out-of-the-Box Winning Approaches </span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="col-lg-2 col-md-12 col-sm-12 float-left"></div>
+</div>
+</div>
+</section>
+<section id="blog-comments-section" class="w-100 float-left pt-4 pb-4">
+<div class="container">
+<div class="row">
+<section id="blog-comments-section" class="av-comment-section">
+<div class="container">
+<div class="row">
+<h2 class="comments-title">
+7 thoughts on "<span>A Detailed Guide to 7 Loss Functions for Machine Learning Algorithms with Python Code</span>" </h2>
+<div class="media pb-3 mt-3">
+<img alt='Joe Vitor' src='https://secure.gravatar.com/avatar/eb00407b6895461c67ffd0d30be548b4?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/eb00407b6895461c67ffd0d30be548b4?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+<h6 class="mt-0">
+Joe Vitor <span>says:</span>
+<small class="av-comment-time">August 14, 2019 at 6:48 pm</small>
+</h6>
+Thank you very much for the article.
+Excellent and detailed explanatins.
+Any idea on how to use Machine Learning for studying the lotteries? Not to play the lotteries, but to study some behaviours based on data gathered as a time series. <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div class="media pb-3 mt-3">
+<img alt='Michael' src='https://secure.gravatar.com/avatar/7d31345a6b6233a080e20b19ff38dc86?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/7d31345a6b6233a080e20b19ff38dc86?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+<h6 class="mt-0">
+Michael <span>says:</span>
+<small class="av-comment-time">August 14, 2019 at 11:46 pm</small>
+</h6>
+Great article, I can see incorporating some of these in our current projects and will introduce our lunch and learn team to your article. Thank you for taking the time to write it! <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div class="media pb-3 mt-3">
+<img alt='Khyati Mahendru' src='https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+<h6 class="mt-0">
+Khyati Mahendru <span>says:</span>
+<small class="av-comment-time">August 15, 2019 at 8:56 pm</small>
+</h6>
+Thank you for your appreciation, Michael! <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div class="media pb-3 mt-3">
+<img alt='Khyati Mahendru' src='https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/16890847e17da6e5f679e01280f632ad?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+<h6 class="mt-0">
+Khyati Mahendru <span>says:</span>
+<small class="av-comment-time">August 15, 2019 at 9:05 pm</small>
+</h6>
+Hi Joe,
+Thank you for your appreciation. Regarding the lotteries problem, please define your problem statement clearly. We have covered Time-Series Analysis in a vast array of articles. I recommend you go through them according to your needs.
+I would suggest you also use our <a href="https://discuss.analyticsvidhya.com/" rel="nofollow">discussion forum</a> for the same. You will be guided by experts all over the world. All the best! <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div class="media pb-3 mt-3">
+<img alt='Naincy Rani' src='https://secure.gravatar.com/avatar/8d1df0cc84bddbaf6c91da0e52a6c0c3?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/8d1df0cc84bddbaf6c91da0e52a6c0c3?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+ <h6 class="mt-0">
+Naincy Rani <span>says:</span>
+<small class="av-comment-time">September 15, 2019 at 8:28 pm</small>
+</h6>
+It was such a wonderful article!!
+Thanks for sharing mate! <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div class="media pb-3 mt-3">
+<img alt='ROSINARA Ferreira' src='https://secure.gravatar.com/avatar/6270a7d9e254546bcf1d23cadac31c95?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/6270a7d9e254546bcf1d23cadac31c95?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+<h6 class="mt-0">
+ROSINARA Ferreira <span>says:</span>
+<small class="av-comment-time">October 15, 2019 at 6:44 am</small>
+</h6>
+Great Article..
+Thank you so much!!
+By the way.. do you have something to share about “ The quantification of certainty above reasonable doubt in the judgment of the merits of criminal proceedings by artificial intelligence “ <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div class="media pb-3 mt-3">
+<img alt='Manish' src='https://secure.gravatar.com/avatar/ab4ff65f95a6f5deb348e5b79bd4c8a7?s=74&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/ab4ff65f95a6f5deb348e5b79bd4c8a7?s=148&#038;d=mm&#038;r=g 2x' class='avatar avatar-74 photo mr-3 rounded-circle' height='74' width='74' loading='lazy' /> <div class="media-body">
+<h6 class="mt-0">
+Manish <span>says:</span>
+<small class="av-comment-time">October 15, 2019 at 5:15 pm</small>
+</h6>
+Great article, complete with code. Any idea on how to create your own custom loss function? <a rel="nofollow" class="comment-reply-link" href="#respond">Reply</a>
+</div>
+</div>
+<div id="respond" class="av-comment-respond">
+<div id="respond" class="comment-respond">
+<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small>Your email address will not be published. Required fields are marked *</small></h3> <small><a rel="nofollow" id="cancel-comment-reply-link" href="/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://www.analyticsvidhya.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><div class="form-row"><div class="form-group col-sm-12"><textarea class="form-control" placeholder="Comment"></textarea></div><div class="form-group col-md-6"><input id="author" name="author" type="text" class="form-control" placeholder="Name*"></div>
+<div class="form-group col-md-6"><input id="email" name="email" type="email" class="form-control" placeholder="Email*"></div>
+<div class="form-group col-sm-12"><input id="url" name="url" type="text" class="form-control" placeholder="Website"></div>
+<p class="comment-subscription-form"><input type="checkbox" name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" /> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" /> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p class="form-submit"></div><button type="submit" class="btn btn-blue px-2">Submit</button> <input type='hidden' name='comment_post_ID' value='53398' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="81ee9451d3" /></p><input type="hidden" id="ak_js" name="ak_js" value="73" /><textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100" style="display: none !important;"></textarea></form> </div>
+</div>
+</div> </div>
+</div>
+</section>
+<section class="top-resources">
+<div class="container">
+<h2 class="heaidng-2 text-center w-100 mb-5">Top Resources</h2>
+<div class="row">
+<div class="col-md-6 col-lg-3 col-sm-12">
+<div class="card">
+<a href="https://www.analyticsvidhya.com/blog/2021/08/python-tutorial-working-with-csv-file-for-data-science/">
+<div class="image-card">
+<img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2020/08/Basic-Concepts-of-Object-Oriented-Programming-in-Python.jpg" class="card-img-top" alt="">
+</div>
+<div class="card-body">
+<p class="card-text">Python Tutorial: Working with CSV file for Data Science</p>
+</div>
+</a>
+<div class="card-footer">
+<a href="https://www.analyticsvidhya.com/blog/author/harikabonthu96/">
+<span>Harika Bonthu - </span>
+</a>
+<span class="text-uppercase">Aug 21, 2021</span>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-3 col-sm-12">
+<div class="card">
+<a href="https://www.analyticsvidhya.com/blog/2017/09/common-machine-learning-algorithms/">
+<div class="image-card">
+<img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2017/09/machine-.png" class="card-img-top" alt="">
+</div>
+<div class="card-body">
+<p class="card-text">Commonly used Machine Learning Algorithms (with Python and R Codes)</p>
+</div>
+</a>
+<div class="card-footer">
+<a href="https://www.analyticsvidhya.com/blog/author/sunil-ray/">
+<span>Sunil Ray - </span>
+</a>
+<span class="text-uppercase">Sep 09, 2017</span>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-3 col-sm-12">
+<div class="card">
+<a href="https://www.analyticsvidhya.com/blog/2020/09/object-oriented-programming/">
+<div class="image-card">
+<img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2020/08/Basic-Concepts-of-Object-Oriented-Programming-in-Python.jpg" class="card-img-top" alt="">
+</div>
+<div class="card-body">
+<p class="card-text">Basic Concepts of Object-Oriented Programming in Python</p>
+</div>
+</a>
+<div class="card-footer">
+<a href="https://www.analyticsvidhya.com/blog/author/hs13/">
+<span>Himanshi Singh - </span>
+</a>
+<span class="text-uppercase">Sep 01, 2020</span>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-3 col-sm-12">
+<div class="card">
+<a href="https://www.analyticsvidhya.com/blog/2021/07/3-interesting-python-projects-with-code-for-beginners/">
+<div class="image-card">
+<img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2021/07/24934pp.png" class="card-img-top" alt="">
+</div>
+<div class="card-body">
+<p class="card-text">3 Interesting Python Projects With Code for Beginners!</p>
+</div>
+</a>
+<div class="card-footer">
+<a href="https://www.analyticsvidhya.com/blog/author/gaurav_here/">
+<span>Gaurav Sharma - </span>
+</a>
+<span class="text-uppercase">Jul 18, 2021</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="tab-content-modal">
+<div class="tab-header w-100 bg-light">
+<div class="container">
+<div class="row">
+<div class="card border-0 w-100">
+<div class="card-header border-0 w-100">
+<h2 class="card-title d-flex">
+<span id="headerHeading"></span>
+<button type="button" class="tabs-close btn px-2 ml-auto p-0 m-0">
+<span aria-hidden="true" class="close" aria-label="Close">&times;</span>
+</button>
+</h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="tab-content w-100" id="nav-tabContent">
+<div class="tab-pane fade show active" id="interview-questions" role="tabpanel" aria-labelledby="interview-questions-tab">
+<div class="card w-100 border-0">
+<div id="interview-questions-display"></div>
+</div>
+</div>
+<div class="tab-pane fade" id="related-videos" role="tabpanel" aria-labelledby="related-videos-tab">
+<div class="card w-100 border-0 Videos-listing">
+<div id="related-videos-display"></div>
+</div>
+</div>
+<div class="tab-pane fade" id="related-articles" role="tabpanel" aria-labelledby="related-articles-tab">
+<div class="card w-100 border-0 ">
+<div id="related-articles-display"></div>
+</div>
+</div>
+<div class="tab-pane fade" id="free-courses" role="tabpanel" aria-labelledby="free-courses-tab">
+<div class="card w-100 border-0 Videos-listing">
+<div id="free-courses-display"></div>
+</div>
+</div>
+</section>
+<footer>
+<div class="container">
+<div class="row">
+<div class="col-lg-4 col-md-4 col-sm-12">
+<a href="https://www.analyticsvidhya.com/">
+<img src="https://av-public-assets.s3.ap-south-1.amazonaws.com/logos/AV_logo_wite.png" alt='Analytics Vidhya' width="85%">
+</a>
+<div class="download-av-app">
+<h6 class="d-flex align-items-center">Download App</h6>
+<a rel="nofollow" href="https://play.google.com/store/apps/details?id=com.analyticsvidhya.android" target="_blank">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/images/play_store_icon.svg" alt='play store'>
+</a>
+<a rel="nofollow" href="https://apps.apple.com/us/app/analytics-vidhya/id1470025572" target="_blank">
+<img src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/images/app_Store_icon.svg" alt='App Store'>
+</a>
+</div>
+</div>
+<div class="col-lg-8 col-md-8 col-sm-12">
+<div class="av-links">
+<ul>
+<li>
+<h6>Analytics Vidhya</h6>
+<a href="https://www.analyticsvidhya.com/about/">About Us</a>
+<a href="https://www.analyticsvidhya.com/team/">Our Team</a>
+<a href="https://www.analyticsvidhya.com/careers/">Careers</a>
+<a href="https://www.analyticsvidhya.com/contact/">Contact us</a>
+</li>
+<li>
+<h6>Data Scientists</h6>
+<a href="https://www.analyticsvidhya.com/blog/">Blog</a>
+<a href="https://datahack.analyticsvidhya.com/">Hackathon</a>
+<a href="https://discuss.analyticsvidhya.com/">Discussions</a>
+<a href="https://www.analyticsvidhya.com/jobs/">Apply Jobs</a>
+</li>
+<li>
+<h6>Companies</h6>
+<a href="https://www.analyticsvidhya.com/corporate/">Post Jobs</a>
+<a href="https://courses.analyticsvidhya.com/">Trainings</a>
+<a href="https://datahack.analyticsvidhya.com/">Hiring Hackathons</a>
+<a href="https://www.analyticsvidhya.com/contact/">Advertising</a>
+</li>
+<li>
+<h6>Visit us</h6>
+<div class="av-get-social">
+<a rel="nofollow" href="https://www.facebook.com/AnalyticsVidhya/" target="_blank" class="social-visit fb mr-2">
+<i class="fab fa-facebook-f"></i>
+</a>
+<a rel="nofollow" href="https://www.linkedin.com/company/analytics-vidhya/" target="_blank" class="social-visit in mr-2">
+<i class="fab fa-linkedin-in"></i>
+</a>
+<a rel="nofollow" href="https://www.youtube.com/channel/UCH6gDteHtH4hg3o2343iObA" target="_blank" class="social-visit utub mr-2">
+<i class="fab fa-youtube"></i>
+</a>
+<a rel="nofollow" href="https://twitter.com/analyticsvidhya" target="_blank" class="social-visit tw mr-2">
+<i class="fab fa-twitter"></i>
+</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<div class="footer-link-bottom">
+<div class="container">
+<div class="row">
+<div class="mr-auto">
+<p>© Copyright 2013-2021 Analytics Vidhya.</p>
+</div>
+<div class="ml-auto">
+<a href="https://www.analyticsvidhya.com/privacy-policy/" target="_blank">Privacy Policy</a>
+<a href="https://www.analyticsvidhya.com/terms/" target="_blank">Terms of Use</a>
+<a href="https://www.analyticsvidhya.com/refund-policy/" target="_blank">Refund Policy</a>
+</div>
+</div>
+</div>
+</div>
+
+</footer>
+<!--googleoff: all--><div id="cookie-law-info-bar" data-nosnippet="true"><span>We use cookies on Analytics Vidhya websites to deliver our services, analyze web traffic, and improve your experience on the site. By using Analytics Vidhya, you agree to our <a href="https://www.analyticsvidhya.com/privacy-policy/">Privacy Policy</a> and <a href="https://www.analyticsvidhya.com/terms/">Terms of Use</a>.<a role='button' tabindex='0' data-cli_action="accept" id="cookie_action_close_header" class="medium cli-plugin-button cli-plugin-main-button cookie_action_close_header cli_action_button" style="display:inline-block; ">Accept</a></span></div><div id="cookie-law-info-again" style="display:none;" data-nosnippet="true"><span id="cookie_hdr_showagain">Privacy & Cookies Policy</span></div><div class="cli-modal" data-nosnippet="true" id="cliSettingsPopup" tabindex="-1" role="dialog" aria-labelledby="cliSettingsPopup" aria-hidden="true">
+<div class="cli-modal-dialog" role="document">
+<div class="cli-modal-content cli-bar-popup">
+<button type="button" class="cli-modal-close" id="cliModalClose">
+<svg class="" viewBox="0 0 24 24"><path d="M19 6.41l-1.41-1.41-5.59 5.59-5.59-5.59-1.41 1.41 5.59 5.59-5.59 5.59 1.41 1.41 5.59-5.59 5.59 5.59 1.41-1.41-5.59-5.59z"></path><path d="M0 0h24v24h-24z" fill="none"></path></svg>
+<span class="wt-cli-sr-only">Close</span>
+</button>
+<div class="cli-modal-body">
+<div class="cli-container-fluid cli-tab-container">
+<div class="cli-row">
+<div class="cli-col-12 cli-align-items-stretch cli-px-0">
+<div class="cli-privacy-overview">
+<h4>Privacy Overview</h4> <div class="cli-privacy-content">
+<div class="cli-privacy-content-text">This website uses cookies to improve your experience while you navigate through the website. Out of these, the cookies that are categorized as necessary are stored on your browser as they are essential for the working of basic functionalities of the website. We also use third-party cookies that help us analyze and understand how you use this website. These cookies will be stored in your browser only with your consent. You also have the option to opt-out of these cookies. But opting out of some of these cookies may affect your browsing experience.</div>
+</div>
+<a class="cli-privacy-readmore" aria-label="Show more" tabindex="0" role="button" data-readmore-text="Show more" data-readless-text="Show less"></a> </div>
+</div>
+<div class="cli-col-12 cli-align-items-stretch cli-px-0 cli-tab-section-container">
+<div class="cli-tab-section">
+<div class="cli-tab-header">
+<a role="button" tabindex="0" class="cli-nav-link cli-settings-mobile" data-target="necessary" data-toggle="cli-toggle-tab">
+Necessary </a>
+<div class="wt-cli-necessary-checkbox">
+<input type="checkbox" class="cli-user-preference-checkbox" id="wt-cli-checkbox-necessary" data-id="checkbox-necessary" checked="checked" />
+<label class="form-check-label" for="wt-cli-checkbox-necessary">Necessary</label>
+</div>
+<span class="cli-necessary-caption">Always Enabled</span> </div>
+<div class="cli-tab-content">
+<div class="cli-tab-pane cli-fade" data-id="necessary">
+<div class="wt-cli-cookie-description">
+Necessary cookies are absolutely essential for the website to function properly. This category only includes cookies that ensures basic functionalities and security features of the website. These cookies do not store any personal information. </div>
+</div>
+</div>
+</div>
+<div class="cli-tab-section">
+<div class="cli-tab-header">
+<a role="button" tabindex="0" class="cli-nav-link cli-settings-mobile" data-target="non-necessary" data-toggle="cli-toggle-tab">
+Non-necessary </a>
+<div class="cli-switch">
+<input type="checkbox" id="wt-cli-checkbox-non-necessary" class="cli-user-preference-checkbox" data-id="checkbox-non-necessary" checked='checked' />
+<label for="wt-cli-checkbox-non-necessary" class="cli-slider" data-cli-enable="Enabled" data-cli-disable="Disabled"><span class="wt-cli-sr-only">Non-necessary</span></label>
+</div> </div>
+<div class="cli-tab-content">
+<div class="cli-tab-pane cli-fade" data-id="non-necessary">
+<div class="wt-cli-cookie-description">
+Any cookies that may not be particularly necessary for the website to function and is used specifically to collect user personal data via analytics, ads, other embedded contents are termed as non-necessary cookies. It is mandatory to procure user consent prior to running these cookies on your website. </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cli-modal-footer">
+<div class="wt-cli-element cli-container-fluid cli-tab-container">
+<div class="cli-row">
+<div class="cli-col-12 cli-align-items-stretch cli-px-0">
+<div class="cli-tab-footer wt-cli-privacy-overview-actions">
+<a id="wt-cli-privacy-save-btn" role="button" tabindex="0" data-cli-action="accept" class="wt-cli-privacy-btn cli_setting_save_button wt-cli-privacy-accept-btn cli-btn">SAVE & ACCEPT</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cli-modal-backdrop cli-fade cli-settings-overlay"></div>
+<div class="cli-modal-backdrop cli-fade cli-popupbar-overlay"></div>
+<!--googleon: all--> <script type="83c4525b4d828e7064e82a19-text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+     jQuery(document).ready(function($) {
+        $('#commentform').validate({
+            rules: {
+                author: {
+                    required: true,
+                    minlength: 2
+                },
+
+                email: {
+                    required: true,
+                    email: true
+                },
+
+                comment: {
+                    required: true,
+                    minlength: 20
+                }
+            },
+
+            messages: {
+                author: "Please provide a name",
+                email: "Please enter a valid email address.",
+                comment: "Please fill the required field"
+            },
+
+            errorElement: "div",
+            errorPlacement: function(error, element) {
+                element.after(error);
+            }
+
+        });
+    });
+    </script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.7' id='regenerator-runtime-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0' id='wp-polyfill-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" id='contact-form-7-js-extra'>
+/* <![CDATA[ */
+var wpcf7 = {"api":{"root":"https:\/\/www.analyticsvidhya.com\/wp-json\/","namespace":"contact-form-7\/v1"}};
+/* ]]> */
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/contact-form-7/includes/js/index.js?ver=5.4.2' id='contact-form-7-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/q2w3-fixed-widget/js/q2w3-fixed-widget.min.js?ver=5.3.0' id='q2w3_fixed_widget-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/jquery/ui/effect.min.js?ver=1.12.1' id='jquery-effects-core-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/jquery/ui/effect-blind.min.js?ver=1.12.1' id='jquery-effects-blind-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" id='wstbLayout-js-extra'>
+/* <![CDATA[ */
+var stbUserOptions = {"mode":"css","cssOptions":{"roundedCorners":true,"mbottom":10,"imgHide":"https:\/\/www.analyticsvidhya.com\/blog\/wp-content\/plugins\/wp-special-textboxes\/images\/minus.png","imgShow":"https:\/\/www.analyticsvidhya.com\/blog\/wp-content\/plugins\/wp-special-textboxes\/images\/plus.png","strHide":"Hide","strShow":"Show"}};
+/* ]]> */
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/wp-special-textboxes/js/wstb.min.js?ver=5.9.109' id='wstbLayout-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-includes/js/wp-embed.min.js?ver=5.8' id='wp-embed-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/oembed-gist/js/script.min.js?ver=4.9.1' id='oembed-gist-js'></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" id='jetpack_related-posts-js-extra'>
+/* <![CDATA[ */
+var related_posts_js_options = {"post_heading":"h4"};
+/* ]]> */
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/jetpack/_inc/build/related-posts/related-posts.min.js?ver=20210604' id='jetpack_related-posts-js'></script>
+<script defer type="83c4525b4d828e7064e82a19-text/javascript" src='https://www.analyticsvidhya.com/wp-content/plugins/akismet/_inc/form.js?ver=4.1.12' id='akismet-form-js'></script>
+<script src='https://stats.wp.com/e-202141.js' defer type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:10.0',blog:'180026056',post:'53398',tz:'5.5',srv:'www.analyticsvidhya.com'} ]);
+	_stq.push([ 'clickTrackerInit', '180026056', '53398' ]);
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/js/init.js" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js" integrity="sha256-NXRS8qVcmZ3dOv3LziwznUHPegFhPZ1F/4inU7uC8h0=" crossorigin="anonymous" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment-with-locales.min.js" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src="https://automation.analyticsvidhya.com/static/js/getFlashDetailsNew.js" defer></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+    $.getScript( "https://brahma.analyticsvidhya.com/static/js/events.js" )
+				  .done(function( script, textStatus ) {
+				  })
+				  .fail(function( jqxhr, settings, exception ) {
+				});
+    </script>
+
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+    
+    var other_clicks = 0;
+    // Side banner clicks
+    $('#sticky1').click(function() {
+        other_clicks = 1;
+        banner_target_url = $(this).find('a').attr('href');
+    	  dataLayer.push({ event : 'datalayer_click', "blog_id" : "","blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" ,"banner_click": "stickybanner1","banner_link_click_href": banner_target_url, "blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname,"blog_utm_source" : '', "blog_utm_medium" : '' , "blog_utm_campaign" : ''});
+    });
+    $('#sticky2 a').click(function() {
+        other_clicks = 2
+    	  banner_target_url = $(this).find('a').attr('href');
+    	  dataLayer.push({ event : 'datalayer_click',"blog_id" : "", "blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" ,"banner_click": "stickybanner2","banner_link_click_href": banner_target_url, "blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname,"blog_utm_source" : '', "blog_utm_medium" : '' , "blog_utm_campaign" : ''});
+    });
+
+    function datalayer_download_pdf_click() {
+    	dataLayer.push({ event : 'datalayer_click', "blog_id" : "","blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" ,"pdf_click": "true", "blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname ,"blog_utm_source" : '', "blog_utm_medium" : '' , "blog_utm_campaign" : ''});
+    	other_clicks = 3;
+    }
+
+    // Bookmark Click
+    function datalayer_bookmark_click()
+    {
+        dataLayer.push({ event : 'datalayer_click', "blog_id" : "","blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" ,"bookmark_click": "true", "blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname ,"blog_utm_source" : '', "blog_utm_medium" : '' , "blog_utm_campaign" : ''});
+    }
+    // All Other Clicks
+    $("a").click(function() {
+    	if (other_clicks == 0) {
+    	dataLayer.push({ event : 'datalayer_click', "blog_id" : "","blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" , "blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname , "blog_link_click_anchor_text": $(this).text(), "blog_link_click_href": $(this).attr('href')});
+    	}
+    	else {
+    		other_clicks = 0;
+    	}
+    });
+    // Internal Page Visit & Page Categories
+        $(document).ready(function(){
+    var post_categories = 'Intermediate,Listicle,Machine Learning,Python,Statistics';
+    dataLayer.push({ event : 'datalayer_click', "blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" , "blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname , "blog_post_categories": post_categories,"blog_utm_source" : '', "blog_utm_medium" : '' , "blog_utm_campaign" : '' });
+    });
+        // User Login Data Layer
+    function datalayer_user_login()
+    {
+        dataLayer.push({ event : 'datalayer_click', "user_logged_in": "true","blog_page_visit" : "https://www.analyticsvidhya.com/blog/2019/08/detailed-guide-7-loss-functions-machine-learning-python-code/" ,"blog_user_id" : uid ,"blog_user_email" : uemail ,"blog_user_full_name" : ufullname,"blog_user_preferred_name" : upname,"blog_utm_source" : '', "blog_utm_medium" : '' , "blog_utm_campaign" : ''});
+    }
+    </script>
+
+
+<script type="83c4525b4d828e7064e82a19-text/javascript" src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/js/oidc-client.js" defer></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+var redirect_uri = 'https://www.analyticsvidhya.com/';
+var authority_id = 'https://id.analyticsvidhya.com/openid';
+var client_o_id = '516577';
+var av_is_signed_in = false;
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript" src="https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/js/id-connect-v2.js" defer></script>
+<script src="https://accounts.google.com/gsi/client" type="83c4525b4d828e7064e82a19-text/javascript"></script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+var img_path = "https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya";
+var bookmark_post_id = "53398";
+var is_bookmarked = false;
+var uid = "";
+var uemail = "";
+var upname = "";
+var ufullname = "";
+var av_is_signed_in = false;
+var id_login_url = 'https://id.analyticsvidhya.com/auth/login/?next='+$(location).attr('href');
+var id_signup_url = 'https://id.analyticsvidhya.com/auth/signup/?next='+$(location).attr('href');
+
+
+$(document).ready(function(){
+
+//var img_path = "https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya";
+google.accounts.id.initialize({
+					client_id: '429311339129-v51ip59f2utl09dvqd2nfunv44el44nj.apps.googleusercontent.com',
+					callback: handleCredentialResponse
+				});
+mgr.getUser().then(function(user) {
+    // If user was already logged in
+    if (user!==null){
+        mgr.querySessionStatus().then(function(res) {
+        //console.log('Ohhh, its you again');
+        av_is_signed_in = true;
+        // Log the user in
+        user_logged_in(user);
+
+        }).catch(function(err){
+					// Check If User logged in With Google Signon
+            // If user logged out from OP
+            av_is_signed_in = false;
+            user_logged_out();
+            mgr.removeUser();
+        });
+
+    } // End check if the user is not null
+    else{
+        mgr.signinRedirectCallback().then(function(user) {
+            // If user just logged in and redirected to this page
+            //console.log(user.profile.given_name, ' bro, how was login experience?');
+            av_is_signed_in = true;
+            // Call user_logged_in_functions
+            user_logged_in(user);
+        }).catch(function(err) {
+            // If user is NOT logged in
+            //console.log('Logged out');
+            user_logged_out();
+            google.accounts.id.prompt();
+            mgr.signinSilent().then(function(user) {
+                av_is_signed_in = true;
+                //console.log("silent signed in", user);
+                user_logged_in(user);
+            }).catch(function(err) {
+
+				// Check If User logged in With Google Signon
+				av_is_signed_in = false;
+                user_logged_out();
+                google.accounts.id.prompt();
+                console.log("Silentsignin Err");
+                //console.log(err);
+				 });
+        });
+    }
+}).catch(function(err){
+    //console.log('Couldnt get user');
+    user_logged_out();
+    });
+}); // document.ready
+
+// For Google Sign On
+function handleCredentialResponse(callback_data){
+            // get credentials from google and send it for login
+            callback_data['source_platform']='blogs-prod';
+            callback_data['redirect_url'] = window.location.href;//'https://www.analyticsvidhya.com/';
+            callback_data['url'] = window.location.href;
+            callback_data['button_id'] = 1113;
+            $.ajax({
+              url:"https://id.analyticsvidhya.com/automation/google/onetap/blog/login",
+              data: callback_data,
+              method:'post',
+              success: function(response){
+                //console.log(response)
+                payload = JSON.parse(response)
+                av_is_signed_in = true;
+              //  console.log(payload);
+            //    console.log(payload.identityid);
+                 $.ajax({
+  url: "https://www.analyticsvidhya.com/back-channel/check-session.php",
+  method: "POST",
+  data: { "session_key" : payload.identityid },
+  success : function(r){
+  	//console.log(r)
+  }
+});
+    user_logged_in(payload);
+              },
+              error: function(){
+                console.log("error")
+              }
+            })
+          }
+
+// User Login
+function user_logged_in(user)
+{
+    $.ajaxSetup({
+            beforeSend: function (xhr){
+                xhr.setRequestHeader("Authorization","Bearer "+user.access_token);
+             }
+    });//ajaxsetup
+
+   uid = user.profile.sub;
+	 uemail = user.profile.email;
+	 upname = user.profile.preferred_username;
+	 ufullname = user.profile.name;
+    //console.log (user.profile);
+    //Display Username on Header
+    //$(".header-join-now").html("<a href='https://id.analyticsvidhya.com/accounts/profile/' target='_blank'>" + user.profile.preferred_username + "</a>");
+    //$(".header-join-now").html(user.profile.preferred_username);
+    $(".header-join-now").hide();
+    $(".header-sign-in").hide();
+    $(".header-logged-in").show();
+		if (user.profile.picture == undefined)
+		{
+			$(".login-short-name").removeClass("d-none");
+    	$(".login-short-name").html(user.profile.preferred_username.charAt(0).toUpperCase());
+			$(".login-header-user-image-dropdown").addClass("d-none");
+		}
+		else
+		{
+				$(".login-short-name").addClass("d-none");
+				$(".login-header-user-image-dropdown").attr('src',user.profile.picture);
+				$(".login-header-user-image-dropdown-small").attr('src',user.profile.picture);
+				$(".login-header-user-image-dropdown-small").removeClass("d-none");
+		}
+		$(".login-header-user-name-dropdown").html(user.profile.preferred_username);
+    $(".login-header-user-email-dropdown").html(user.profile.email);
+		datalayer_user_login();
+
+		if ($('.coding-window-no-show').length >= 0) {
+      $(".coding-window-no-show").hide();
+      initCodingWindow();
+      $(".coding-window").show();
+    }
+    if ($('.video-show-no-show').length >= 0) {
+        $(".video-show-no-show").hide();
+				$(".video-show").show();
+    }
+
+    if ($('#typing-tutor').length > 0) {
+        $("#typing-tutor").html("<a href='https://typingtutor.analyticsvidhya.com/'>https://typingtutor.analyticsvidhya.com/</a>");
+    }
+    // Check if the article is already bookmarked
+  $.ajax({
+     type:"GET",
+     url:"https://id.analyticsvidhya.com/api/v1/resources/external_save_check?resource_ids=53398",
+     contentType: 'application/json',
+     success: function(data) {
+         if(data.results[0] && data.results[0].is_bookmarked==true)
+            {
+        $("#bookmark-article").removeClass("far").addClass("fas active").attr("title","Remove Bookmark");
+				$(".bookmark-circle-title").addClass("active").attr("title","Remove Bookmark");
+				is_bookmarked = true;
+		    }
+		  else
+		  {
+		    $("#bookmark-article").removeClass("fas").addClass("far").attr("title","Bookmark this story to read later");
+				$(".bookmark-circle-title").removeClass("active").attr("title","Bookmark this story to read later");
+		  }
+     },
+        error: function(data) {
+        data =  JSON.stringify(data);
+//        $(".save-for-later").html(data);
+       }
+    });
+   // End Check if article already Bookmarked
+
+	// If user is logged in give option to bookmark article
+    /*
+        $(".save-for-later").html('<a id="bookmark-article" href="#"><img src="'+img_path+'/custom-design/images/do-bookmark.svg" width="18px" alt="Bookmark this story to read later" title="Bookmark this story to read later" data-toggle="tooltip"></a>');
+				$("#top-av-users-signup").hide();
+				$("#top-av-users-show").show();
+				$("#is_logged_in_brchr").val("1");
+				$(".coding-window-no-show").hide();
+				initCodingWindow();
+				$(".coding-window").show();
+				$(".video-show-no-show").hide();
+				$(".video-show").show();
+				$("#typing-tutor").html("<a href='https://typingtutor.analyticsvidhya.com/'>https://typingtutor.analyticsvidhya.com/</a>");
+				$(".qa-login-req-no-show").hide();
+				$(".qa-login-req").show();
+				$('.qa-login-req').css('visibility','visible');
+				$(".fluffycourse-hide").hide();
+				$(".fluffycourse").show();
+				$(".lock-icon").hide();
+				*/
+                //datalayer_user_login();
+
+			//	quizInit(uid);
+				// Popup Logged in
+			//	$("#popup_logged_in").val("1");
+				//console.log ("H:"+uid);
+			/*	$.getScript( "https://brahma.analyticsvidhya.com/static/js/events.js" )
+				  .done(function( script, textStatus ) {
+				    console.log( "Brahma Loaded" );
+				  })
+				  .fail(function( jqxhr, settings, exception ) {
+						console.log( "Brahma Failed" );
+				});*/
+				//$("#signup").hide();
+				//$("#dwn-brchr").show();
+	// End If user is logged in give option to bookmark article
+			//	console.log (user.profile);
+}
+
+function show_login_links()
+{
+    $(".header-sign-in").attr('href',id_login_url);
+    $(".header-join-now").attr('href',id_signup_url);
+
+}
+
+
+function user_logged_out()
+{
+    //console.log("logged out");
+    $(".header-join-now").show();
+    show_login_links();
+    if ($(".coding-window-no-show").length == 0)
+		{
+			$(".coding-window").before("<a href='https://id.analyticsvidhya.com/auth/login/?next="+$(location).attr('href')+ "?&utm_source=coding-window-blog&source=coding-window-blog'><img src='https://s3-ap-south-1.amazonaws.com/av-blog-media/wp-content/uploads/2019/08/coding-window-noshow.jpg' class='coding-window-no-show'></a>");
+		}
+		$(".coding-window").hide();
+		if ($(".video-show-no-show").length == 0)
+		{
+			$(".video-show").before("<a href='https://id.analyticsvidhya.com/auth/login/?next="+$(location).attr('href')+ "?&utm_source=video-show-blog&source=video-show-blog'><img src='https://cdn.analyticsvidhya.com/wp-content/uploads/2021/02/video-noshow.jpg' class='video-show-no-show'></a>");
+		}
+		$(".video-show").hide();
+
+        if ($('#typing-tutor').length > 0) {
+        $("#typing-tutor").html("<a href='https://id.analyticsvidhya.com/auth/login/?next="+$(location).attr('href')+ "' target='_blank'> <img style='height: 40px;' src='https://cdn.analyticsvidhya.com/wp-content/uploads/2020/12/images.png'/></a>");
+        }
+}
+
+// Bokmark Article
+$('.bookmark').click(function(){
+	if (av_is_signed_in)
+		bookmark_post();
+    else
+        window.location = id_login_url;
+});
+
+$(".download-pdf").click(function(){
+	if (av_is_signed_in)
+	{
+		datalayer_download_pdf_click();
+		window.location = "https://www.analyticsvidhya.com/back-channel/download-pdf.php?pid=53398&next="+$(location).attr('href');
+	}
+	else
+	    window.location = id_login_url;
+});
+
+
+function bookmark_post()
+{
+	event.preventDefault();
+	datalayer_bookmark_click();
+	var bookmark_data = {resource_id:"53398", resource_type:"article",resource_permalink:"",resource_title:"",resource_medium: "blog"};
+ if (is_bookmarked==false) {
+ $.ajax({
+	type:"POST",
+	//dataType:"json",
+	url:"https://id.analyticsvidhya.com/api/v1/resources/external_save",
+	data:JSON.stringify(bookmark_data),
+ contentType: 'application/json',
+	success: function(data) {
+			data =JSON.stringify(data);
+          $("#bookmark-article").addClass("fas").attr("title","Remove Bookmark");
+        	$(".bookmark-circle-title").addClass("active").attr("title","Remove Bookmark");
+        	is_bookmarked=true;
+	},
+		 error: function(data) {
+		 data =  JSON.stringify(data);
+            $("#bookmark-article").removeClass("fas").attr("title","Failed to Bookmark Article");
+            $(".bookmark-circle-title").removeClass("active").attr("title","Failed to Bookmark Article");
+    	}
+ });
+} // end if
+else if (is_bookmarked==true){
+ $.ajax({
+	type:"DELETE",
+	dataType:"json",
+	url:"https://id.analyticsvidhya.com/api/v1/resources/external_save",
+	data:JSON.stringify(bookmark_data),
+ contentType: 'application/json',
+	success: function(data) {
+			data =JSON.stringify(data);
+			$("#bookmark-article").removeClass("fas").attr("title","Bookmark this story to read later");
+			$(".bookmark-circle-title").removeClass("active").attr("title","Bookmark this story to read later");
+			 is_bookmarked=false;
+	},
+		 error: function(data) {
+		 data =  JSON.stringify(data);
+		 $("#bookmark-article").attr("title","Failed to Remove Bookmark");
+		 $(".bookmark-circle-title").attr("title","Failed to Remove Bookmark");
+		}
+ });
+} //end elseif
+}
+
+
+// Top Header Menus Interview Questions / Related Videos / Articles etc
+$(document).ready(function(){
+
+	$('#free-courses-tab').click(function(){
+			 $('#headerHeading').html('Courses');
+		 });
+		 $('#related-articles-tab').click(function(){
+			 $('#headerHeading').html('Articles');
+		 });
+		 $('#related-videos-tab').click(function(){
+			 $('#headerHeading').html('Videos');
+		 });
+		 $('#interview-questions-tab').click(function(){
+			 $('#headerHeading').html('Interview Questions');
+		 });
+
+    $(".login-required").click(function(){
+	   	if (av_is_signed_in==false)
+	   	{
+	   	event.preventDefault();
+	    $(this).removeClass("active");
+	    window.location = "https://id.analyticsvidhya.com/auth/login/?next="+$(location).attr('href');
+	   	}
+	   	else if (av_is_signed_in==true)
+	   	{
+	   	    $('#interview-questions-display').html('<iframe src="https://dsat.analyticsvidhya.com/blog/create/assessment/53398" height="500" width="100%" frameborder="0">');
+ 	   	    $('#related-videos-display').load('https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/top-header-related-videos.php');
+          $('#related-articles-display').load('https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/top-header-related-articles.php?cat=5386,5297,2498,396,4087&exclude=53398');
+	   	    $('#free-courses-display').load('https://www.analyticsvidhya.com/wp-content/themes/analytics-vidhya/top-header-free-courses.php');
+	   	}
+
+	});
+});
+
+function initCodingWindow() {
+	$('.coding-window iframe').each(function() {
+		var src = $(this).data('src');
+		if (!src) {
+			return;
+		}
+		this.src = src;
+	})
+}
+</script>
+
+<div class="modal fade av-video-modal" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+<div class="modal-content">
+<div class="modal-body">
+<div class="embed-responsive embed-responsive-16by9">
+<iframe id="related-videos-modal-iframe" class="embed-responsive-item" allowfullscreen></iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+        $(function() {
+             $('#videoModal').on('show.bs.modal', function (e) {
+                  $("#related-videos-modal-iframe").attr('src','https://player.vimeo.com/video/'+$(e.relatedTarget).data('video')+'?autoplay=1');
+                });
+                $('#videoModal').on('hide.bs.modal', function (e) {
+                  $("#related-videos-modal-iframe").attr('src','');
+                });
+         });
+    </script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+    $(function() {
+      // sidebar Reading progress activatore
+      $(window).on('scroll',function(){
+        var WindowTop = $(window).scrollTop();
+        $('.av-details-page .target').each(function(i){
+          if(WindowTop > $(this).offset().top - 190 &&
+              WindowTop < $(this).offset().top + $(this).outerHeight(true)
+            ){
+              if ($(this).data('tocid'))
+             {
+              $(".h2_toc").removeClass('active');
+              $("#"+$(this).data('tocid')).addClass('active');
+             }
+          }
+        });
+      });
+
+    var i=0;
+    $(".av-details-page").find('h2').each(function() {
+    i=i+1;
+    var item = $(this);
+    var h2id = 'h2_'+i;
+    var h2_toc_id = 'h2_toc_'+i;
+    item.attr('id', h2id);
+    item.attr('data-tocid', h2_toc_id);
+    $(this).addClass("target");
+    var li = $('<li/>');
+   // var a = $('<a/>', {text: item.text(), href: '#' + h2id, title: item.text(),class: 'h2_toc',id:h2_toc_id });
+    var a = $('<a/>', {text: item.text(), href: '#' + h2id, class: 'h2_toc',id:h2_toc_id });
+    a.appendTo(li);
+    $('.toc').append(li);
+  });
+
+  $(".h2_toc").click(function() {
+    $(".h2_toc").removeClass('active');
+    $(this).addClass('active');
+    h2_href = $(this).attr('href');
+    $('html, body').animate({
+        scrollTop: $(h2_href).offset().top-190
+    }, 2000);
+  });
+});
+</script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+        $(document).ready(function(){
+          // Article related navigation link fix
+          var fixmeTop = $('.display-content').offset().top;
+          $(window).scroll(function() {
+            var currentScroll = $(window).scrollTop();
+            if (currentScroll >= fixmeTop) {
+              $('.header-2').addClass('header-2-fixed-top');
+              $('.page-header').addClass('margin-top-fix');
+            } else {
+              $('.header-2').removeClass('header-2-fixed-top');
+              $('.page-header').removeClass('margin-top-fix');
+            }
+          });
+          // Main heading and tabel content of right side fix
+          $(window).scroll(function(){
+            if ($(window).scrollTop() >=320) {
+              $('.page-header').addClass('active');
+              $('.change-to-sticky').addClass('active');
+            }
+            else if($(window).scrollTop() < 320){
+              $('.page-header').removeClass('active');
+              $('.change-to-sticky').removeClass  ('active');
+            }
+          });
+          // Add class for navTab tabsbar content active
+            $( "#nav-tab" ).click(function() {
+            $('.tab-content-modal').addClass('active');
+            $('body').addClass('active');
+          });
+          // Remove class for navTab tabsbar content active
+          $( ".tabs-close" ).click(function() {
+            $('.tab-content-modal').removeClass('active');
+            $('.header-2 .nav-link.active ').removeClass('active');
+            $('body').removeClass('active');
+          });
+
+        });
+      </script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+        // User Reding Progressbar fix
+        $(window).bind('scroll', () => {
+          const scrollHeight = $(document).height() - 100;
+          const scrollPosition = $(window).height() + $(window).scrollTop();
+          let percentageScrolled = Math.round((scrollPosition / scrollHeight) * 100);
+          if (percentageScrolled > 100) percentageScrolled = 100;
+          if ($(window).scrollTop() > 320) {
+            $('.reading-progress-container').addClass('show');
+          }
+        else {
+          $('.reading-progress-container').removeClass('show')
+        }
+          $('.reading-progress-container .progress-bar').css('width', `${percentageScrolled}%`);
+        });
+      </script>
+<script type="83c4525b4d828e7064e82a19-text/javascript">
+      // Our Top Author popover on mouse hover
+          $(".av-pop").popover({
+            trigger: "manual",
+            html: true,
+            animation: false
+          })
+        .on("mouseenter", function() {
+          var _this = this;
+          $(this).popover("show");
+          $(".popover").on("mouseleave", function() {
+            $(_this).popover('hide');
+          });
+        }).on("mouseleave", function() {
+          var _this = this;
+          setTimeout(function() {
+            if (!$(".popover:hover").length) {
+              $(_this).popover("hide");
+            }
+          }, 100);
+        });
+      </script>
+</div>
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="83c4525b4d828e7064e82a19-|49" defer=""></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"rayId":"69ceeec9cbff6594","token":"6dc69ea2ec65420db26006e7a2ffc709","version":"2021.9.0","si":100}'></script>
+</body>
+</html>

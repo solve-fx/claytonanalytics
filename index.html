@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Clayton Analytics LTD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+</head>
+<body>
+
+<section class="header">
+    <nav>
+        <a href="index.html" class="logo-text">Clayton Analytics</a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="tools.html">TOOLS</a></li>
+                <li><a href="projects.html">PROJECTS</a></li>
+                <!-----<li>
+                    <div class="dropdown">
+                        <button class="dropbtn">FROM SCRATCH</button>
+                        <div class="dropdown-content">
+                          <a href="">Linear Regression</a>
+                          <a href="">Generalised Linear Models</a>
+                          <a href="">Gradient Boosting Machines</a>
+                          <a href="">Neural Networks</a>
+                        </div>
+                    </div>
+                </li>----->
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+<div class="text-box">
+    <h1>Data Science Services</h1>
+    <p>We help businesses advance their analytical capabiltities and use their data to it's full potential.  </p>
+    <a href="contact.html" class="hero-btn">Contact us to find out more</a>
+</div>
+
+</section>
+
+<!-----Services----->
+<section class="services">
+    <h1>Services we Offer</h1>
+    <!-----<p>blach clah clah</p>----->
+    <div class="row2">
+        <div class="services-col">
+            <!-----<img src="images/deeplearning.png">----->
+            <img src="./images/deeplearning.png">
+            <div class = "layer">
+                <h3>Machine Learning</h3>
+                <p>Utilising advanced machine learning techniques such as gradient boosting machines and deep learning, we can build predictive models to identify
+                    key relationships in your data and future behaviour, allowing you to make decisions based on hard data.</p>
+            </div>
+        </div>
+
+        <div class="services-col">
+            <img src="images/clustering.jpg">
+            <div class = "layer">
+                <h3>Clustering</h3>
+                <p>By grouping datapoints with similar characteristics, you can segment and profile your customers. Allowing different you to deploy different strategies tailored to your customer profiles. </p>
+            </div>
+        </div>
+
+        <div class="services-col">
+            <img src="images/optimisation2.png">
+            <div class = "layer">
+                <h3>Optimisation</h3>
+                <p>By using a sophisticated modelling process, we can use this as a basis for computationally selecting a path that achieves the desired set of business objectives. </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-----Services2----->
+<section class="services2">
+    <!-----<p>blach clah clah</p>----->
+    <div class="row3">
+
+        <div class="services2-col">
+            <img src="images/dashboard.png">
+            <div class = "layer">
+                <h3>Dashboards</h3>
+                <p>Have a hunch about an opportunity in your data? We can build dashboards that allow you to drill into the finer details of your data, allowing you to test your hypothesis.</p>
+            </div>
+        </div>
+
+        <div class="services2-col">
+            <img src="images/insight.png">
+            <div class = "layer">
+                <h3>Business Insight</h3>
+                <p>Guided by model outputs, we can delve deeper into the relationships in the data, understanding what the main drivers behind your business objectives are and identifying where the areas for opportunity lie.</p>
+            </div>
+        </div>
+
+        <div class="services2-col">
+            <img src="images/training.jpg">
+            <div class = "layer">
+                <h3>Training</h3>
+                <p>Want to upskill your current teams skillset? We can host workshops showing you the tools and techniques we use daily and how to use them yourself. </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-----Call to Action----->
+
+<section class="cta">
+    <h1>We can provide a tailored service<br> get in contact to find out more</h1>
+    <a href="contact.html" class="hero-btn">Contact Us</a>
+</section>
+
+
+<!-----Java Script----->
+<script>
+    var NavLinks = document.getElementbyID("navLinks");
+
+    function showMenu(){
+        NavLinks.style.right = "0";
+    }
+    function hideMenu(){
+        NavLinks.style.right = "-200px";
+    }
+
+</script>
+
+</body>
+</html>

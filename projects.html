@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Clayton Analytics LTD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+</head>
+<body>
+
+<section class="sub-header">
+    <nav>
+        <a href="index.html" class="logo-text">Clayton Analytics</a>
+        <div class="nav-links" id="navLinks">
+            <i class="fa fa-times" onclick="hideMenu()"></i>
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="tools.html">TOOLS</a></li>
+                <li><a href="projects.html">PROJECTS</a></li>
+                <!-----<li>
+                    <div class="dropdown">
+                        <button class="dropbtn">FROM SCRATCH</button>
+                        <div class="dropdown-content">
+                          <a href="">Linear Regression</a>
+                          <a href="">Generalised Linear Models</a>
+                          <a href="">Gradient Boosting Machines</a>
+                          <a href="">Neural Networks</a>
+                        </div>
+                    </div>
+                </li>----->
+                <li><a href="contact.html">CONTACT</a></li>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+
+    <h1>Example Projects</h1>
+
+
+</section>
+<!----- Project content ----->
+
+<!-----Predictive Modelling----->
+<section class="projects">
+    <div class="row2">
+        <div class="projects-col">
+
+                <h3>Predictive Modelling</h3>
+                <p>We have many years experience building market leading predictive models utilising tabular, time series and image data. <br><br>
+                We have a strong understanding of a variety of methodologies including linear models, tree based models and deep learning. The problem, data available and client needs determine the appropriate techniques.  <br><br>
+                By taking a scientific approach we minimise the chance of overfitting to historic data and maximise the accuracy of the models on unseen data.
+                </p>
+
+        </div>
+
+        <div class="projects-col">
+            <img src="images/eda.jpg">
+            <div class = "proj-layer">
+                <p>We explore your data thoroughly, ensuring the data is correct and clean. If required we will also transform the data to produce better model results.  </p>
+            </div>
+        </div>
+
+        <div class="projects-col">
+            <img src="images/Rplot09.png">
+            <div class = "proj-layer">
+                <p>A portion of the data is set aside and used to assess the chosen model in order to better understand the expected performance</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-----Most Import----->
+<section class="projects">
+    <div class="row2">
+        <div class="projects-col">
+
+                <h3>Most Important Factors</h3>
+                <p>Utilising machine learning techniques, we can quickly identify which are the main factors that influence a target variable. <br><br>
+                Examples include identifying key drivers behind customer lifetime value, house prices, insurance claims.  <br><br>
+                By building a predictive model, we takes into account all other factors and so we aren't just identifying correlation but the actual factor effects. 
+                
+                
+                </p>
+
+        </div>
+
+        <div class="projects-col">
+            <img src="images/shap_mi.png">
+            <div class = "proj-layer">
+                <p>In this example of claim frequency, the algorithm has identified the factor 'vh_age' to be the most important factor </p>
+            </div>
+        </div>
+
+        <div class="projects-col">
+            <img src="images/shap_freq.png">
+            <div class = "proj-layer">
+                <p>By plotting claim frequency by the 'vh_age' factor, we can see there is indeed a strong relationship here.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-----Customer Segmentation & Optimisation----->
+<section class="projects">
+    <div class="row2">
+        <div class="projects-col">
+
+                <h3>Segmentation & Optimisation</h3>
+                <p>Often customers are segmented, either by characteristics or behaviour in order to deploy different strategies. <br><br>
+                    By building predictive models, we can cluster customers based on their predicted behaviours. <br><br>
+                    Using the predicted behaviour or cluster group, pricing/advertisting/other tools can be optimised in order to maximise business objectives.
+
+                
+                
+                </p>
+
+        </div>
+
+        <div class="projects-col">
+            <img src="images/clusters.png">
+            <div class = "proj-layer">
+                <p>An example of customers segemented by their predicted behaviour </p>
+            </div>
+        </div>
+
+        <div class="projects-col">
+            <img src="images/optimisation3.png">
+            <div class = "proj-layer">
+                <p>Business objectives such as maximising revenue, profit, sales, can be optimised using the behavioural models.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-----Dashboarding----->
+<section class="projects">
+    <div class="row2">
+        <div class="projects-col">
+
+                <h3>Dashboards</h3>
+                <p>Often customers are segmented, either by characteristics or behaviour in order to deploy different strategies. <br><br>
+                    By building predictive models, we can cluster customers based on their predicted behaviours. <br><br>
+                    Using the predicted behaviour or cluster group, pricing/advertisting/other tools can be optimised in order to maximise business objectives.
+                </p>
+
+        </div>
+
+        <div class="projects-col">
+            <img src="images/clusters.png">
+            <div class = "proj-layer">
+                <p>An example of customers segemented by their predicted behaviour </p>
+            </div>
+        </div>
+
+        <div class="projects-col">
+            <img src="images/optimisation3.png">
+            <div class = "proj-layer">
+                <p>Business objectives such as maximising revenue, profit, sales, can be optimised using the behavioural models.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-----Call to Action----->
+
+<section class="cta">
+    <h1>We can provide a tailored service<br> get in contact to find out more</h1>
+    <a href="contact.html" class="hero-btn">Contact Us</a>
+</section>
+
+
+<!-----Java Script----->
+<script>
+    var NavLinks = document.getElementbyID("navLinks");
+
+    function showMenu(){
+        NavLinks.style.right = "0";
+    }
+    function hideMenu(){
+        NavLinks.style.right = "-200px";
+    }
+
+
+</script>
+
+</body>
+</html>
